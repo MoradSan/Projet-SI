@@ -3,6 +3,7 @@ import numpy as np
 import math
 import ZoneInteret as zi
 import algo
+import matplotlib.pyplot as plt
 
 #Classe qui implemente l'algorithme Flot Optique
 class flot_optiques(algo.algorithme):
@@ -16,7 +17,9 @@ class flot_optiques(algo.algorithme):
         cap = cv2.VideoCapture(video)
         
         #Params pour ShiTomasi Corner Detection
-        feature_params = dict(maxCorners=100, qualityLevel=0.3,
+        # maxcorner = nombre maximal de points
+        #
+        feature_params = dict(maxCorners=100, qualityLevel=0.01,
                               minDistance=7, blockSize=7)
         
         #Parameters for lucas kanade optical flow
@@ -51,21 +54,58 @@ class flot_optiques(algo.algorithme):
                 
                 #Calculer flot optique
                 p1, st, err = cv2.calcOpticalFlowPyrLK(old_gray, frame_gray, p0, None, **lk_params)
-                if p1 is None:
-                    break
+
                 #Selectionner les bons points
                 good_new = p1[st == 1]
                 good_old = p0[st == 1]
 
-                norme = 0
+                """
+                norme_total = 0
+                nombre_points = 0
                 #Faire le dessin qui indique le changement de points caracteristiques
                 for i, (new, old) in enumerate(zip(good_new, good_old)):
                     a, b = new.ravel()
                     c, d = old.ravel()
-                    norme = math.sqrt((a - c) ** 2 + (b - d) ** 2)
+                    norme_total += math.sqrt((a - c) ** 2 + (b - d) ** 2)
+                    nombre_points += 1
                     cv2.line(mask, (a, b), (c, d), color[i].tolist(), 2)
                     cv2.circle(frame, (a, b), 5, color[i].tolist(), -1)
-                ma_liste.append(norme / 0.05)
+                ma_liste.append(norme_total / nombre_points / 0.05)
+                """
+
+                #Affichage de la norme du centre de gravité
+                norme_total = 0
+                X = 0
+                Y = 0
+                nombre_points = 0
+                # Faire le dessin qui indique le changement de points caracteristiques
+                for i, (new, old) in enumerate(zip(good_new, good_old)):
+                    a, b = new.ravel()
+                    c, d = old.ravel()
+
+                    X += a
+                    Y += b
+                    nombre_points += 1
+
+                    cv2.line(mask, (a, b), (c, d), color[i].tolist(), 2)
+                    cv2.circle(frame, (a, b), 5, color[i].tolist(), -1)
+
+                if nombre_points > 0:
+                    norme_total += math.sqrt((X/nombre_points) ** 2 + (Y/nombre_points) ** 2)
+                    ma_liste.append(norme_total)
+
+                """#Affichage de la moyenne des x 
+                x = 0
+                n = 0
+                for i, (new, old) in enumerate(zip(good_new, good_old)):
+                    a, b = new.ravel()
+                    c, d = old.ravel()
+                    x += a
+                    n+=1
+                    cv2.line(mask, (a, b), (c, d), color[i].tolist(), 2)
+                    cv2.circle(frame, (a, b), 5, color[i].tolist(), -1)
+                ma_liste.append(x/n)
+                """
 
                 img = cv2.add(frame, mask)
 
@@ -87,4 +127,5 @@ class flot_optiques(algo.algorithme):
                 break
         cap.release()
         cv2.destroyAllWindows()
+
         return ma_liste

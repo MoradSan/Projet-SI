@@ -26,21 +26,8 @@ class affichage_graphique:
         self.subplot1 = self.fig.add_subplot(self.gs[0, :])
         self.fig.canvas.mpl_connect('button_press_event', self.__onclick)
         self.fig.canvas.set_window_title('Resultat du traitement')
-
-        self.frame_list = list()
+        self.start_frame = start_frame
         self.video = video
-        self.cap = cv2.VideoCapture(self.video)
-
-        for i in range(0, start_frame):
-            self.cap.read()
-
-        self.ret, self.new_frame = self.cap.read()
-
-        while self.ret:
-            self.frame_list.append(self.new_frame)
-            self.ret, self.new_frame = self.cap.read()
-
-        self.cap.release()
 
 
     def __onclick(self, event):
@@ -54,10 +41,27 @@ class affichage_graphique:
         x = int(float(event.xdata))
         subplot2 = self.fig.add_subplot(self.gs[1, 0])
         plt.title("Image correspondante :")
-        plt.imshow(cv2.cvtColor(self.frame_list[x], cv2.COLOR_BGR2RGB))
+        image = self.getImage(x)
+        plt.imshow(cv2.cvtColor(image, cv2.COLOR_BGR2RGB))
         plt.axis("off")
         self.fig.canvas.draw()
 
+    def getImage(self, frame):
+        cap = cv2.VideoCapture(self.video)
+
+        i = 0
+        ret = True
+        image = None
+
+        for i in range(0, self.start_frame):
+            ret, image = cap.read()
+
+        while i <= frame and ret:
+            ret, image = cap.read()
+            i += 1
+
+        cap.release()
+        return image
 
     def afficher(self, ma_liste):
         """
@@ -75,7 +79,7 @@ class affichage_graphique:
         localtime = time.localtime(time.time())
         localtime_str = str(localtime.tm_year)+'_'+str(localtime.tm_mon)+'_'+ str(localtime.tm_mday)+'_'+str(localtime.tm_hour)+'h'+str(localtime.tm_min)+'m'+str(localtime.tm_sec)+'s'
         # Initialisation du graphique
-        plt.axis([0, len(ma_liste) + 10, 0, int(max(y)) + 10])
+        plt.axis([0, len(ma_liste) + 10, int(min(y)) - 10, int(max(y)) + 10])
 
         plt.xlabel("Nombre d'images")
         plt.ylabel("Quantite de mouvement")
