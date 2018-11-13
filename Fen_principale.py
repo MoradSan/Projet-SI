@@ -10,8 +10,9 @@ import algo_distance
 import algo_flots_optiques
 import remove_operateur
 import time
-
 def thread(video, unAlgo, frame):
+
+
     """
     Cette méthode permet de créer un job avec un vidéo, un algo et le frame à commencer.
     Ce job peut être utilisé dans un thread pour gagner la vitesse de calcul
@@ -21,9 +22,16 @@ def thread(video, unAlgo, frame):
     :param frame: le frame à commencer
     :return:
     """
+
+
+
     ma_liste = unAlgo.traiterVideo(video, frame)
     pomme = affichage_resultat.affichage_graphique(video, frame)
     pomme.afficher(ma_liste)
+
+
+
+
 
 
 class Fen_principale(QtWidgets.QMainWindow, Fen_principale_design.Ui_MainWindow):
@@ -63,6 +71,8 @@ class Fen_principale(QtWidgets.QMainWindow, Fen_principale_design.Ui_MainWindow)
         self.pushButton_supprimer.clicked.connect(self.zone_interet_supprimer)
         self.pushButton_lancer.clicked.connect(self.on_myButton_clicked)
 
+
+
     def parcourir_clicked(self):
         """
         Cette méthode permet de gérer la clique sur le bouton parcourir pour choisir une vidéo
@@ -70,6 +80,7 @@ class Fen_principale(QtWidgets.QMainWindow, Fen_principale_design.Ui_MainWindow)
         """
         filename, types = QtWidgets.QFileDialog.getOpenFileName()
         self.lineEdit_path.setText(str(filename))
+
 
     def zone_interet_select(self):
         """
@@ -164,15 +175,22 @@ class Fen_principale(QtWidgets.QMainWindow, Fen_principale_design.Ui_MainWindow)
 
         # Si la vidéo existe, on lance un autre thread en exécutant le bon algo
         if (os.path.exists(video_name)):
-
+            msg = QMessageBox()
+            msg.setIcon(QMessageBox.Information)
+            msg.setText("Veuillez patienter quelques instants svp")
             # Algorithme Distance
             if (algo == 1):
                 self.plainTextEdit_histoire.insertPlainText("\n" + "Application de l'algorithme Distances...")
                 try:
+
+
                     a = threading.Thread(None, thread, None, (),
                                          {'video': video_name, 'unAlgo': algo_distance.algo_distance(),
                                           'frame': self.start_frame})
+
                     a.start()
+
+
                 except:
                     QMessageBox.warning(self, "Erreur", "Erreurs lors de l'exécution",
                                         QMessageBox.Ok)
@@ -191,5 +209,6 @@ class Fen_principale(QtWidgets.QMainWindow, Fen_principale_design.Ui_MainWindow)
                                         QMessageBox.Ok)
                 self.plainTextEdit_histoire.insertPlainText(
                     "\n" + "Le résultat est enregistré dans le répertoire /resultats sous format PDF.")
+            msg.exec()
         else:
             print("no video")
