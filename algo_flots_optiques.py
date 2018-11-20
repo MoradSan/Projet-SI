@@ -3,8 +3,10 @@ import numpy as np
 import math
 import ZoneInteret as zi
 import algo
+import threading
 from RGBToHSV import HSV
 
+COULEUR_INDESIRABLE = HSV(178, 174, 114)
 
 # Classe qui implemente l'algorithme Flot Optique
 class flot_optiques(algo.algorithme):
@@ -50,7 +52,7 @@ class flot_optiques(algo.algorithme):
             old_frame = old_frame[param[1]:param[1] + param[3], param[0]:param[0] + param[2]]
         else:
             # Si la zone d'interêt n'existe pas on garde la frame en entier
-            param = [0, 0, len(frame), len(frame[0])]
+            param = [0, 0, len(frame[0]), len(frame)]
 
         # Transforme la frame en niveau de gris
         old_gray = cv2.cvtColor(old_frame, cv2.COLOR_BGR2GRAY)
@@ -59,14 +61,14 @@ class flot_optiques(algo.algorithme):
         # Copie le tableau contenant la frame en le remplissant de 0
         mask = np.zeros_like(old_frame)
 
-        # Compteur des points détectés et des points supprimés par l'lagorithme des couleurs
-        count_point = 0
-        count_removed = 0
-
         boucle = True
         while boucle:
             # ret est égal à 0 si il n'y a plus de frame
             if ret:
+
+                # Traitement préalable sur la frame : les pixels et leurs alentours sont remplacés par du blanc
+                # frame = suppression_couleur(frame, param[2], param[3], COULEUR_INDESIRABLE, 10)
+
                 # converti la frame en niveau de gris
                 frame_gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 
@@ -91,9 +93,9 @@ class flot_optiques(algo.algorithme):
                         # Récupération des coordonnées des deux points
                         a, b = new.ravel()
                         c, d = old.ravel()
-
+                        """ Partie remplacée par la suppression d'une couleur sur une image"""
                         # On fait la moyenne de couleurs des points aux alentours du point de la nouvelle frame
-                        rgb = moyenne_pixels_alentours(int(a), int(b), frame)
+                        rgb = moyenne_pixels_alentours(int(a), int(b), param[2], param[3], frame)
                         # Si il n'y a pas de problème, on converti la couleur RGB en HSV
                         if rgb != 0:
                             hsv = HSV(rgb[0], rgb[1], rgb[2])
@@ -101,16 +103,13 @@ class flot_optiques(algo.algorithme):
                             hsv = None
                         # Si il ne s'agit pas de la couleur que l'on veut éviter, on l'ajoute à notre norme moyenne
                         # et on le dessine
-                        if hsv is not None and not isRightColor(hsv):
+                        if hsv is not None and not isRightColor(hsv, COULEUR_INDESIRABLE):
                             X += a
                             Y += b
                             nombre_points += 1
 
-                            cv2.line(mask, (a, b), (c, d), color[i].tolist(), 2)
-                            cv2.circle(frame, (a, b), 5, color[i].tolist(), -1)
-                        else:
-                            count_removed += 1
-                        count_point += 1
+                        cv2.line(mask, (a, b), (c, d), color[i].tolist(), 2)
+                        cv2.circle(frame, (a, b), 5, color[i].tolist(), -1)
                     # Pour cette frame on calcule la norme du vecteur centre de gravité du déplacement entre
                     # les deux frames
                     if nombre_points > 0:
@@ -140,10 +139,6 @@ class flot_optiques(algo.algorithme):
             else:
                 boucle = False
 
-        print(count_removed)
-        print("/")
-        print(count_point)
-
         cap.release()
         cv2.destroyAllWindows()
 
@@ -153,12 +148,11 @@ class flot_optiques(algo.algorithme):
 # Fonction qui détermine si une couleur est proche des alentours d'une autre couleur
 # Entrée : la couleur au format  HSV
 # Sortie : vrai si la couleur est dans l'intervalle, faux sinon
-def isRightColor(hsv):
+def isRightColor(hsv, base):
     # Variation acceptable de la teinte pour considérer la couleur comme dans l'intervalle
     deltaH = 30
-    deltaSV = 50
+    deltaSV = 20
     # La couleur ciblée
-    base = HSV(210, 188, 170)
     base = base.getHSV()
     hsv = hsv.getHSV()
 
@@ -182,28 +176,44 @@ def isRightColor(hsv):
         return False
     return True
 
+
 # Fonction qui permet de ressorti la couleur moyenne des pixels aux alentours d'un pixel donné (compris)
 # Enrées : les coordonnées x et y d'un pixel et la frame concernée
 # Sorties : le nouveau trio r, g, b. 0 si le pixel n'a pas de voisin et donc si il est à l'extérieur de la frame
-def moyenne_pixels_alentours(ptx, pty, frame):
+def moyenne_pixels_alentours(ptx, pty, width, height, frame, aire=5):
 
     r = 0
     g = 0
     b = 0
     count = 0
-    aire = 5
 
     # Parcours du carré de taille aire x aire donc le pixel concerné est le centre
     for i in range(ptx - int(aire / 2), ptx + int(aire / 2)):
         for j in range(pty - int(aire / 2), pty + int(aire / 2)):
             # Ne prendre les valeurs que si les points sont dans la frame
-            if i in range(0, len(frame)) and j in range(0, len(frame[i])):
-                r += frame[i][j][0]
-                g += frame[i][j][1]
-                b += frame[i][j][2]
+            if i in range(0, width - 1) and j in range(0, height - 1):
+                r += frame[j][i][2]
+                g += frame[j][i][1]
+                b += frame[j][i][0]
                 count += 1
 
     if count == 0:
         return 0
 
     return int(r/count), int(g/count), int(b/count)
+
+# Fonction qui supprime les pixels alentours si ils sont de la bonne couleur (les applique en blanc
+def suppression_couleur(frame, width, height, hsv_indesirable, aire=5):
+
+    new_frame = frame
+    for i in range(0, width):
+        for j in range(0, height):
+            hsv = HSV(new_frame[j][i][2], new_frame[j][i][1], new_frame[j][i][0])
+            if isRightColor(hsv, hsv_indesirable):
+                for x in range(i - int(aire / 2), i + int(aire / 2)):
+                    for y in range(j - int(aire / 2), j + int(aire / 2)):
+                        new_frame[j][i][0] = 255
+                        new_frame[j][i][1] = 255
+                        new_frame[j][i][2] = 255
+    return new_frame
+
