@@ -14,25 +14,24 @@ def thread(video, unAlgo, frame):
 
 
     """
-    Cette méthode permet de créer un job avec un vidéo, un algo et le frame à commencer.
-    Ce job peut être utilisé dans un thread pour gagner la vitesse de calcul
+        Cette méthode permet de créer un job avec un vidéo, un algo et le frame à commencer.
+        Ce job peut être utilisé dans un thread pour gagner la vitesse de calcul
 
-    :param video: la vidéo à traiter
-    :param unAlgo: l'algo
-    :param frame: le frame à commencer
-    :return:
+        :param video: la vidéo à traiter
+        :param unAlgo: l'algo
+        :param frame: le frame à commencer
+        :return:
     """
 
 
-
+    """
+        Traitement de la video pour obtenir une liste de points
+        qui peuvent etre dessine dans une courbe
+    """
     ma_liste = unAlgo.traiterVideo(video, frame)
+    #Affichage du resultat
     pomme = affichage_resultat.affichage_graphique(video, frame)
     pomme.afficher(ma_liste)
-
-
-
-
-
 
 class Fen_principale(QtWidgets.QMainWindow, Fen_principale_design.Ui_MainWindow):
 
@@ -55,6 +54,7 @@ class Fen_principale(QtWidgets.QMainWindow, Fen_principale_design.Ui_MainWindow)
         self.highH = 0
         self.start_frame = 3
 
+        # les widgets
         self.setupUi(self)
         self.group = QtWidgets.QButtonGroup()
         self.group.addButton(self.radioButtonOui)
@@ -64,7 +64,7 @@ class Fen_principale(QtWidgets.QMainWindow, Fen_principale_design.Ui_MainWindow)
         self.radioButtonNon.setChecked(True)
         self.plainTextEdit_histoire.setReadOnly(True)
 
-        # les signals
+        # les signaux
         self.pushButton_parcourir.clicked.connect(self.parcourir_clicked)
         self.pushButton_select.clicked.connect(self.zone_interet_select)
         self.pushButton_consulter.clicked.connect(self.zone_interet_consulter)
@@ -76,22 +76,27 @@ class Fen_principale(QtWidgets.QMainWindow, Fen_principale_design.Ui_MainWindow)
     def parcourir_clicked(self):
         """
         Cette méthode permet de gérer la clique sur le bouton parcourir pour choisir une vidéo
-        :return:
+        :param:
+        :returns:
         """
+        #ouvre le repertoire du projet et nous permet de selectinner une video
         filename, types = QtWidgets.QFileDialog.getOpenFileName()
+        #enregistre le chemin de la video
         self.lineEdit_path.setText(str(filename))
 
 
     def zone_interet_select(self):
         """
-        La méthode pour gérer la clique sur le bouton Selectionner une Zone Interet
-        Il faut que la vidéo doit être choisi en avance
-        Dans la fenêtre principale en haut à droite affiche la zone interêt choisie
-
-        :return:
+            La méthode pour gérer la clique sur le bouton Selectionner une Zone Interet
+            Il faut que la vidéo soit  choisi en avance
+            Dans la fenêtre principale en haut à droite affiche la zone interêt choisie
+            :param:
+            :return:
         """
+        #verifie le chemin de la video
         if(os.path.exists(self.lineEdit_path.text())):
             zi = ZoneInteret(self.lineEdit_path.text())
+            #affichage d'une fenetre permettant de choisir la zone d'interer
             if ZoneInteret.verifier_presence_fichier_ini() and zi.flag:
                 img = Image.open('zi/image_zone_interet.png')
                 img_resize = img.resize((self.label_zi_img.width(), self.label_zi_img.height()))
@@ -106,9 +111,10 @@ class Fen_principale(QtWidgets.QMainWindow, Fen_principale_design.Ui_MainWindow)
 
     def zone_interet_consulter(self):
         """
-        Le méthode pour gérer la clique sur Consulter une zone interet
-        Si les fichiers de zone d'interêt sont présents, dans la fenêtre principale en haut à droite affiche la zone interêt choisie
-        :return:
+            Le méthode pour gérer la clique sur Consulter une zone interet
+            Si les fichiers de zone d'interêt sont présents, dans la fenêtre principale en haut à droite affiche la zone interêt choisie
+            :param:
+            :return:
         """
 
         # Presence du fichier "param.ini"
@@ -125,13 +131,16 @@ class Fen_principale(QtWidgets.QMainWindow, Fen_principale_design.Ui_MainWindow)
 
     def zone_interet_supprimer(self):
         """
-        Le méthode pour gérer la clique sur Supprimer une zone interet
-        Les fichiers de zone interêt vont être supprimés
-        :return:
+            La methode pour gerer le clique sur Supprimer une zone interet
+            Les fichiers de zone interêt vont être supprimes
+            :param:
+            :return:
         """
+        #Message de warning
         button = QMessageBox.question(self, "Question",
                                       "Etes-vous sûr de vouloir supprimer la Zone d'intérêt actuelle ？",
                                       QMessageBox.Ok | QMessageBox.Cancel, QMessageBox.Ok)
+        #Suppression
         if button == QMessageBox.Ok:
             ZoneInteret.supprimer_ZI(self)
             self.label_zi_img.clear()
@@ -175,9 +184,7 @@ class Fen_principale(QtWidgets.QMainWindow, Fen_principale_design.Ui_MainWindow)
 
         # Si la vidéo existe, on lance un autre thread en exécutant le bon algo
         if (os.path.exists(video_name)):
-            msg = QMessageBox()
-            msg.setIcon(QMessageBox.Information)
-            msg.setText("Veuillez patienter quelques instants svp")
+
             # Algorithme Distance
             if (algo == 1):
                 self.plainTextEdit_histoire.insertPlainText("\n" + "Application de l'algorithme Distances...")
@@ -187,7 +194,7 @@ class Fen_principale(QtWidgets.QMainWindow, Fen_principale_design.Ui_MainWindow)
                     a = threading.Thread(None, thread, None, (),
                                          {'video': video_name, 'unAlgo': algo_distance.algo_distance(),
                                           'frame': self.start_frame})
-
+                    cv2.imshow('Veuillez patienter svp', cv2.imread('img.jpg', cv2.WINDOW_AUTOSIZE))
                     a.start()
 
 
@@ -209,6 +216,5 @@ class Fen_principale(QtWidgets.QMainWindow, Fen_principale_design.Ui_MainWindow)
                                         QMessageBox.Ok)
                 self.plainTextEdit_histoire.insertPlainText(
                     "\n" + "Le résultat est enregistré dans le répertoire /resultats sous format PDF.")
-            msg.exec()
         else:
-            print("no video")
+          print("no video")

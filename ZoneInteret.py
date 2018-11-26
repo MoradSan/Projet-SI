@@ -9,54 +9,62 @@ from PyQt5.QtWidgets import QMessageBox
 class ZoneInteret:
 
     """
-    Cette classe permet de gérer les information de zone interet
-    Une zone interet est un cadre d'image sur l'image entière.
-    On se concentre sur cette zone interet pour faire le traitement.
-    C'est une manière de réduire le bruit sur le résultat de traitement
-    @version 2.0
+        Cette classe permet de gérer les informations sur la zone d'interet
+        Une zone interet est un cadre d'image sur l'image entière.
+        On se concentre sur cette zone d'interet pour faire le traitement.
+        C'est une manière de réduire le bruit sur le résultat de traitement
+        @version 3.0
     """
 
     @staticmethod
     def verifier_presence_fichier_ini():
         """
-        Vérifier si les fichiers de zone interet sont déjà présents dans le dossier
-        :return: true si présent, false sinon
+            Vérifier si les fichiers de zone d'interet sont déjà présents dans le dossier
+            :param:
+            :returns: true si présent, false sinon
         """
         return os.path.isfile('./zi/param.ini')
 
     @staticmethod
     def supprimer_ZI(window):
         """
-        La méthode pour gérer la suppresion de zone interet
-        :param window: le fenetre principale
-        :return:
+            La méthode pour gérer la suppresion de zone interet
+            :param window: le fenetre principale
+            :returns:
         """
+
+        #si le fichier ./zi/param.ini existe
         if os.path.isfile('./zi/param.ini'):
             try:
+                #suppression de ces documents
                 os.remove("./zi/param.ini")
                 os.remove("./zi/image_modele.png")
                 os.remove("./zi/image_zone_interet.png")
+                #on informe l'utilisateur  du succes de l'operation
                 QMessageBox.information(window, "Information", "Supprimer la Zone d'intérêt avec succès", QMessageBox.Ok)
             except OSError:
+                #on informe l'utilisateur  de l'echec de l'operation
                 QMessageBox.warning(window, "Erreur", "Impossible de supprimer les fichiers dans le repertoire /zi",
                                     QMessageBox.Ok)
         else:
+            # si le fichier ./zi/param.ini n'existe pas
             QMessageBox.warning(window, "Erreur", "Impossible de trouver les fichiers dans le repertoire /zi",
                                 QMessageBox.Ok)
 
 
     def __init__(self, video):
         """
-        Initialise les variables nécessaires à l'affichage de l'image et aux événements
-        :param video: la vidéo à traiter
+            Initialise les variables necessaires à l'affichage de l'image et aux evenements
+            :param video: la vidéo à traiter
+            :returns:
         """
         self.flag = False
         self.get_one_image_from_video(video)
 
-        # On se sert de l'image extraite précédemment
+        # On se sert de l'image extraite precedemment
         self.img = mpimg.imread('./zi/image_modele.png')
 
-        # On initialise le titre de la fenêtre
+        # On initialise le titre de la fenetre
         fig = plt.figure(1)
         fig.canvas.set_window_title("Zone Interet")
 
@@ -85,20 +93,23 @@ class ZoneInteret:
 
     def on_mouseclick_press(self, event):
         """
-        Un click gauche -> sauvegarde des coordonnées du pointeur
-        :param event: évènement de clique
-        :return:
+            Un click gauche -> sauvegarde des coordonnées du pointeur
+            :param event: évènement de clique
+            :returns:
         """
+        #coordonnees x de la zone cliquee
         self.x0 = event.xdata
+        #coordonnees y de la zone cliquee
         self.y0 = event.ydata
 
 
     def on_mouseclick_release(self, event):
         """
-        Click gauche relâché -> dessin du rectangle
-        :param event: évènement de souris
-        :return:
+            Click gauche relâché -> dessin du rectangle
+            :param event: évènement de souris
+            :returns:
         """
+        #obtention des autres coordonnees pour dessiner le rectangle
         self.x1 = event.xdata
         self.y1 = event.ydata
         self.rect.set_width(self.x1 - self.x0)
@@ -109,12 +120,14 @@ class ZoneInteret:
 
     def on_keyboard_press(self, event):
         """
-        Si la touche "enter" est appuyée, on sauvegarde la zone d'intérêt
-        :param event: évenenment de keyboard
-        :return:
+            Si la touche "enter" est appuyée, on sauvegarde la zone d'intérêt
+            :param event: évenenment de keyboard
+            :return:
         """
+        #touche enter appuyée
         if event.key == 'enter':
             self.flag = True
+            # on ecrit dans le fichier
             with open("./zi/param.ini", "w") as file:
                 file.write(str(int(self.rect.get_x())) + ",")
                 file.write(str(int(self.rect.get_y())) + ",")
@@ -124,6 +137,7 @@ class ZoneInteret:
             # On cache les axes avant d'enregistrer l'image modele avec la zone d'interet
             self.ax.get_xaxis().set_visible(False)
             self.ax.get_yaxis().set_visible(False)
+            # Enregistrement zone interet
             plt.title("Zone interet")
             plt.savefig("./zi/image_zone_interet.png")
             plt.close()
@@ -131,10 +145,13 @@ class ZoneInteret:
 
     def show_window(self):
         """
-        Pour afficher la fenêtre qui est utilisée pour choisir une zone interet
-        :return:
+            Pour afficher la fenetre qui est utilisee pour choisir une zone interet
+            :param:
+            :returns:
         """
-        plt.title("Selectionner la zone interet avec la souris. Appuyez sur entrer pour valider.")
+
+        plt.title("Selectionnez la zone d'interet avec la souris. Appuyez sur entrer pour valider.")
+        # Affichage de la fenetre
         plt.show()
 
     def get_one_image_from_video(self, video):

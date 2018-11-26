@@ -6,6 +6,8 @@ import os.path
 import cv2
 import numpy as np
 import ZoneInteret as zi
+from matplotlib import pyplot as plt
+from tkinter import *
 
 
 class algo_distance(algo.algorithme):
@@ -17,11 +19,11 @@ class algo_distance(algo.algorithme):
     @version 2.0
     """
 
-
     def get_nomAlgo(self):
         return "distance"
 
     def traiterVideo(self, video, start_frame):
+
         ma_liste = list()
         if type(video) is str:
             if not os.path.exists(video):
@@ -29,7 +31,6 @@ class algo_distance(algo.algorithme):
             cap = cv2.VideoCapture(video)
         else:
             cap = video
-
 
         # Detection de l'opérateur
         # On ne commence le traitement sur la première image dépourvu d'opérateur
@@ -44,7 +45,7 @@ class algo_distance(algo.algorithme):
 
         # Si la ZoneInteret a été selectionnée on récupère les paramètres de cette dernière
         # et on les appliques aux frames
-        if zi.ZoneInteret.verifier_presence_fichier_ini() :
+        if zi.ZoneInteret.verifier_presence_fichier_ini():
             with open("./zi/param.ini", "r") as file:
                 line = file.readline()
                 param = [int(x.strip()) for x in line.split(',')]
@@ -58,6 +59,7 @@ class algo_distance(algo.algorithme):
         differences = np.zeros(frame_gray.shape, dtype=np.int32)
 
         while ret:
+            #conversion de la frame en nuance de gris
             frame_gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
             nvdifferences = cv2.absdiff(old_gray, frame_gray)
             ma_liste.append(np.mean(np.add(differences, nvdifferences, dtype=np.int32)))
@@ -70,6 +72,6 @@ class algo_distance(algo.algorithme):
                 frame = frame[param[1]:param[1] + param[3], param[0]:param[0] + param[2]]
 
         cap.release()
-
+        cv2.destroyAllWindows()
         return ma_liste
 

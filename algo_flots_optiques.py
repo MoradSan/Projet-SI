@@ -7,6 +7,7 @@ import matplotlib.pyplot as plt
 
 #Classe qui implemente l'algorithme Flot Optique
 class flot_optiques(algo.algorithme):
+
     #Retourner le nom d'algorithme
     def get_nomAlgo(self):
         return "Flot optiques"
@@ -15,17 +16,17 @@ class flot_optiques(algo.algorithme):
     def traiterVideo(self, video, start_frame):
         ma_liste = list()
         cap = cv2.VideoCapture(video)
-        
+
         #Params pour ShiTomasi Corner Detection
         # maxcorner = nombre maximal de points
         #
         feature_params = dict(maxCorners=100, qualityLevel=0.01,
                               minDistance=7, blockSize=7)
-        
+
         #Parameters for lucas kanade optical flow
         lk_params = dict(winSize=(15, 15), maxLevel=2,
                          criteria=(cv2.TERM_CRITERIA_EPS | cv2.TERM_CRITERIA_COUNT, 10, 0.03))
-        
+
         #Creer des couleurs aleatoire
         color = np.random.randint(0, 255, (100, 3))
         for i in range(0, start_frame):
@@ -33,7 +34,7 @@ class flot_optiques(algo.algorithme):
 
         ret, old_frame = cap.read()
         ret, frame = cap.read()
-        
+
         #Fixer la detection dans la zone interet
         if zi.ZoneInteret.verifier_presence_fichier_ini():
             with open("./zi/param.ini", "r") as file:
@@ -51,7 +52,7 @@ class flot_optiques(algo.algorithme):
             #ret, frame = cap.read()
             if ret:
                 frame_gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-                
+
                 #Calculer flot optique
                 #p0 et p1 deux tableaux de même taille
                 p1, st, err = cv2.calcOpticalFlowPyrLK(old_gray, frame_gray, p0, None, **lk_params)
@@ -116,7 +117,7 @@ class flot_optiques(algo.algorithme):
                 k = cv2.waitKey(30) & 0xff
                 if k == 27:
                     break
-                
+
                 #Mise a jours le frame actuel
                 old_gray = frame_gray.copy()
                 p0 = good_new.reshape(-1, 1, 2)
