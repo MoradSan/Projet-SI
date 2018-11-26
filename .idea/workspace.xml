@@ -2,16 +2,38 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="bf90b450-ef47-4f7f-8f1c-6f56c98886c9" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Fen_principale.py" beforeDir="false" afterPath="$PROJECT_DIR$/Fen_principale.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ZoneInteret.py" beforeDir="false" afterPath="$PROJECT_DIR$/ZoneInteret.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/affichage_resultat.py" beforeDir="false" afterPath="$PROJECT_DIR$/affichage_resultat.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/algo_distance.py" beforeDir="false" afterPath="$PROJECT_DIR$/algo_distance.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/algo_flots_optiques.py" beforeDir="false" afterPath="$PROJECT_DIR$/algo_flots_optiques.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/zi/image_modele.png" beforeDir="false" afterPath="$PROJECT_DIR$/zi/image_modele.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/zi/image_zone_interet.png" beforeDir="false" afterPath="$PROJECT_DIR$/zi/image_zone_interet.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/zi/param.ini" beforeDir="false" afterPath="$PROJECT_DIR$/zi/param.ini" afterDir="false" />
+    </list>
+    <list id="b6f89be6-2b48-48d3-9afc-172f89c96137" name="Revert: 'modif'" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resultats/2018_11_12_11h5m18s.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resultats/2018_11_13_11h26m5s.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resultats/2018_11_13_12h23m42s.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resultats/2018_11_13_12h31m27s.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resultats/2018_11_13_12h33m27s.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resultats/2018_11_13_12h33m55s.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resultats/2018_11_13_12h6m6s.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resultats/2018_11_13_12h8m41s.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resultats/2018_11_19_0h55m31s.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resultats/2018_11_20_16h45m45s.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resultats/2018_11_20_16h46m12s.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resultats/2018_11_20_17h12m26s.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resultats/2018_11_20_17h23m51s.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resultats/2018_11_20_17h28m5s.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resultats/2018_11_20_17h34m27s.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resultats/2018_11_20_17h35m29s.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resultats/2018_11_20_17h38m34s.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resultats/2018_11_20_17h40m41s.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resultats/2018_11_20_17h42m12s.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resultats/2018_11_20_17h52m20s.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resultats/2018_11_20_18h0m41s.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resultats/2018_11_20_18h11m12s.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resultats/2018_11_20_18h15m18s.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resultats/2018_11_20_18h2m13s.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resultats/2018_11_9_10h7m22s.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resultats/2018_11_9_9h33m35s.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resultats/2018_11_9_9h35m53s.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resultats/2018_11_9_9h3m31s.pdf" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -34,41 +56,82 @@
     <session id="1591269453">
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="py" value="50" />
+          <entry key="py" value="17" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="Python" value="50" />
+          <entry key="Python" value="17" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="py" value="3351" />
+          <entry key="py" value="839" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="Python" value="3351" />
+          <entry key="Python" value="839" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="12" />
-          <entry key="project.open.time.11" value="1" />
-          <entry key="project.open.time.30" value="3" />
+          <entry key="project.closed" value="6" />
           <entry key="project.open.time.35" value="1" />
-          <entry key="project.open.time.37" value="1" />
           <entry key="project.open.time.38" value="1" />
           <entry key="project.open.time.40" value="1" />
-          <entry key="project.open.time.58" value="1" />
-          <entry key="project.opened" value="9" />
+          <entry key="project.opened" value="3" />
         </counts>
       </usages-collector>
     </session>
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300" />
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/RGBToHSV.py">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Fen_principale.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="68">
+              <caret line="4" selection-start-line="4" selection-end-line="4" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/main.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="17">
+              <caret line="1" selection-start-line="1" selection-end-line="1" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/algo_flots_optiques.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="2098">
+              <caret line="210" column="81" lean-forward="true" selection-start-line="210" selection-start-column="81" selection-end-line="210" selection-end-column="81" />
+              <folding>
+                <element signature="e#0#10#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/ZoneInteret.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="34">
+              <caret line="2" selection-start-line="2" selection-end-line="2" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
@@ -81,8 +144,6 @@
       <find>unAlgo</find>
       <find>start_frame</find>
       <find>progress</find>
-      <find>tkinter</find>
-      <find>box</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -92,12 +153,8 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/Fen_principale_design.py" />
-        <option value="$PROJECT_DIR$/main.py" />
-        <option value="$PROJECT_DIR$/ZoneInteret.py" />
-        <option value="$PROJECT_DIR$/algo_flots_optiques.py" />
-        <option value="$PROJECT_DIR$/affichage_resultat.py" />
-        <option value="$PROJECT_DIR$/algo_distance.py" />
         <option value="$PROJECT_DIR$/Fen_principale.py" />
+        <option value="$PROJECT_DIR$/algo_flots_optiques.py" />
       </list>
     </option>
   </component>
@@ -127,8 +184,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="SearchEverywhereHistoryKey" value="tkinter&#9;null&#9;null" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$USER_HOME$/Python/TP1" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RunDashboard">
@@ -172,6 +228,7 @@
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <changelist id="bf90b450-ef47-4f7f-8f1c-6f56c98886c9" name="Default Changelist" comment="" />
+      <changelist id="b6f89be6-2b48-48d3-9afc-172f89c96137" name="Revert: 'modif'" comment="" />
       <created>1539078924722</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
@@ -180,11 +237,12 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1040" height="744" extended-state="6" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.248503" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.08324552" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
+      <window_info anchor="bottom" id="Messages" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.3295082" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.24590164" />
@@ -192,7 +250,7 @@
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Version Control" order="7" show_stripe_button="false" />
+      <window_info active="true" anchor="bottom" id="Version Control" order="7" visible="true" weight="0.329718" />
       <window_info anchor="bottom" id="Terminal" order="8" />
       <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
       <window_info anchor="bottom" id="Python Console" order="10" />
@@ -201,66 +259,39 @@
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
     </layout>
   </component>
+  <component name="Vcs.Log.History.Properties">
+    <option name="SHOW_OTHER_BRANCHES" value="true" />
+    <option name="COLUMN_ORDER">
+      <list>
+        <option value="0" />
+        <option value="2" />
+        <option value="3" />
+        <option value="1" />
+      </list>
+    </option>
+  </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python37-32/Lib/tkinter/__init__.py">
+    <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python37-32/Lib/threading.py" />
+    <entry file="file://$PROJECT_DIR$/algo_distance.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="3506" selection-start-line="3506" selection-end-line="3506" />
+        <state relative-caret-position="-588">
+          <caret line="23" column="8" selection-start-line="23" selection-start-column="8" selection-end-line="23" selection-end-column="8" />
         </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/AppData/Roaming/Python/Python37/site-packages/matplotlib/cbook/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="137">
-          <caret line="214" selection-start-line="214" selection-end-line="214" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/.PyCharmCE2018.2/system/python_stubs/-492424872/_tkinter.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/remove_operateur.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1271" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/waiting.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/waiting.jpg" />
-    <entry file="file://$PROJECT_DIR$/algo_flots_optiques.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="401">
-          <caret line="116" column="23" selection-start-line="116" selection-start-column="20" selection-end-line="116" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python37-32/Lib/threading.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="401">
-          <caret line="864" selection-start-line="864" selection-end-line="864" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/TestScriptFromInternet.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-897" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/algo.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="19" column="84" selection-start-line="19" selection-start-column="26" selection-end-line="19" selection-end-column="84" />
-        </state>
+        <state relative-caret-position="-255" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ZoneInteret.py">
+    <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python37-32/Lib/tkinter/__init__.py" />
+    <entry file="file://$PROJECT_DIR$/Fen_principale_design.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2516">
-          <caret line="153" column="33" selection-start-line="153" selection-start-column="33" selection-end-line="153" selection-end-column="33" />
+        <state relative-caret-position="17">
+          <caret line="170" column="74" selection-start-line="170" selection-start-column="74" selection-end-line="170" selection-end-column="74" />
         </state>
       </provider>
     </entry>
@@ -271,40 +302,17 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Fen_principale_design.py">
+    <entry file="file://$PROJECT_DIR$/affichage_resultat.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="347">
-          <caret line="170" column="74" selection-start-line="170" selection-start-column="74" selection-end-line="170" selection-end-column="74" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/algo_distance.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="918">
-          <caret line="60" selection-start-line="60" selection-end-line="60" />
-          <folding>
-            <element signature="e#46#57#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="-166">
+          <caret line="74" column="7" selection-start-line="74" selection-start-column="7" selection-end-line="74" selection-end-column="7" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Fen_principale.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="211">
-          <caret line="196" column="72" selection-start-line="196" selection-start-column="72" selection-end-line="196" selection-end-column="72" />
-          <folding>
-            <element signature="e#0#28#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/affichage_resultat.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="378">
-          <caret line="164" column="8" selection-start-line="164" selection-start-column="8" selection-end-line="164" selection-end-column="8" />
-          <folding>
-            <element signature="e#45#76#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="68">
+          <caret line="4" selection-start-line="4" selection-end-line="4" />
         </state>
       </provider>
     </entry>
