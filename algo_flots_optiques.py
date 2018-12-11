@@ -1,3 +1,5 @@
+import itertools
+
 import cv2
 import numpy as np
 import math
@@ -5,17 +7,25 @@ import ZoneInteret as zi
 import algo
 import threading
 from RGBToHSV import HSV
+from multiprocessing.pool import ThreadPool
 
-COULEUR_INDESIRABLE = HSV(178, 174, 114)
 
 # Classe qui implemente l'algorithme Flot Optique
 class flot_optiques(algo.algorithme):
+
     # Retourner le nom d'algorithme
     def get_nomAlgo(self):
         return "Flot optiques"
 
     # Fonction pricipale pour traiter la video
-    def traiterVideo(self, video, start_frame):
+    def traiterVideo(self, video, start_frame, colorOperateur=None, suppressionCouleur=False):
+
+        if colorOperateur is not None:
+            #On converti d'abord la QColor en HSV
+            COULEUR_INDESIRABLE = HSV(colorOperateur.red(), colorOperateur.green(), colorOperateur.blue())
+        else:
+            COULEUR_INDESIRABLE = None
+
         ma_liste = list()
         cap = cv2.VideoCapture(video)
 
@@ -65,17 +75,13 @@ class flot_optiques(algo.algorithme):
         while boucle:
             # ret est égal à 0 si il n'y a plus de frame
             if ret:
-
-                # Traitement préalable sur la frame : les pixels et leurs alentours sont remplacés par du blanc
-                # frame = suppression_couleur(frame, param[2], param[3], COULEUR_INDESIRABLE, 10)
+                if colorOperateur is not None and suppressionCouleur:
+                    # Traitement préalable sur la frame : les pixels et leurs alentours sont remplacés par du blanc
+                    frame = suppression_couleur(frame, param[2], param[3], COULEUR_INDESIRABLE, 10)
 
                 # converti la frame en niveau de gris
                 frame_gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-
-                # Calcule le flot optique à partir des deux frame et des points détectés sur la première
-                # p1, un nouvel ensemble de point
-                # st, un tableau de même taille que P0 et P1, pour chaque point 1 si une correspondance a été trouvé
-                # pour p0 dans p1, 0 sinon
+                # Détection des points
                 p1, st, err = cv2.calcOpticalFlowPyrLK(old_gray, frame_gray, p0, None, **lk_params)
 
                 # Cas où l'ensemble de point n'est pas vide
@@ -93,23 +99,31 @@ class flot_optiques(algo.algorithme):
                         # Récupération des coordonnées des deux points
                         a, b = new.ravel()
                         c, d = old.ravel()
-                        """ Partie remplacée par la suppression d'une couleur sur une image"""
-                        # On fait la moyenne de couleurs des points aux alentours du point de la nouvelle frame
-                        rgb = moyenne_pixels_alentours(int(a), int(b), param[2], param[3], frame)
-                        # Si il n'y a pas de problème, on converti la couleur RGB en HSV
-                        if rgb != 0:
-                            hsv = HSV(rgb[0], rgb[1], rgb[2])
+                        # Cas où on ne veut pas prendre en compte l'opérateur
+                        if colorOperateur is not None:
+                            # On fait la moyenne de couleurs des points aux alentours du point de la nouvelle frame
+                            rgb = moyenne_pixels_alentours(int(a), int(b), param[2], param[3], frame)
+                            # Si il n'y a pas de problème, on converti la couleur RGB en HSV
+                            if rgb != 0:
+                                hsv = HSV(rgb[0], rgb[1], rgb[2])
+                            else:
+                                hsv = None
+                            # Si il ne s'agit pas de la couleur que l'on veut éviter, on l'ajoute à notre norme moyenne
+                            # et on le dessine
+                            if hsv is not None and not isRightColor(hsv, COULEUR_INDESIRABLE):
+                                X += a
+                                Y += b
+                                nombre_points += 1
+                                cv2.line(mask, (a, b), (c, d), color[i].tolist(), 2)
+                                cv2.circle(frame, (a, b), 5, color[i].tolist(), -1)
+                        # Sinon on prend tout en compte
                         else:
-                            hsv = None
-                        # Si il ne s'agit pas de la couleur que l'on veut éviter, on l'ajoute à notre norme moyenne
-                        # et on le dessine
-                        if hsv is not None and not isRightColor(hsv, COULEUR_INDESIRABLE):
                             X += a
                             Y += b
                             nombre_points += 1
+                            cv2.line(mask, (a, b), (c, d), color[i].tolist(), 2)
+                            cv2.circle(frame, (a, b), 5, color[i].tolist(), -1)
 
-                        cv2.line(mask, (a, b), (c, d), color[i].tolist(), 2)
-                        cv2.circle(frame, (a, b), 5, color[i].tolist(), -1)
                     # Pour cette frame on calcule la norme du vecteur centre de gravité du déplacement entre
                     # les deux frames
                     if nombre_points > 0:
@@ -205,15 +219,26 @@ def moyenne_pixels_alentours(ptx, pty, width, height, frame, aire=5):
 # Fonction qui supprime les pixels alentours si ils sont de la bonne couleur (les applique en blanc
 def suppression_couleur(frame, width, height, hsv_indesirable, aire=5):
 
-    new_frame = frame
-    for i in range(0, width):
-        for j in range(0, height):
-            hsv = HSV(new_frame[j][i][2], new_frame[j][i][1], new_frame[j][i][0])
+    pool = ThreadPool(20)
+
+    pool.starmap(thread_suppr_coul, zip(itertools.repeat(frame), itertools.repeat(width), itertools.repeat(height),
+                                        itertools.repeat(hsv_indesirable), itertools.repeat(aire),
+                                        [(0, 0), (0, 1), (1, 0), (1, 1)]))
+
+    pool.close()
+    pool.join()
+    return frame
+
+
+def thread_suppr_coul(frame, width, height, hsv_indesirable, aire, partOfFrame):
+    for i in range(int(width / 2 * partOfFrame[0]), int(width / 2 + (width / 2 * partOfFrame[0]))):
+        for j in range(int(height / 2 * partOfFrame[1]), int(height / 2 + (height / 2 * partOfFrame[1]))):
+            hsv = HSV(frame[j][i][2], frame[j][i][1], frame[j][i][0])
             if isRightColor(hsv, hsv_indesirable):
                 for x in range(i - int(aire / 2), i + int(aire / 2)):
                     for y in range(j - int(aire / 2), j + int(aire / 2)):
-                        new_frame[j][i][0] = 255
-                        new_frame[j][i][1] = 255
-                        new_frame[j][i][2] = 255
-    return new_frame
+                        frame[j][i][0] = 255
+                        frame[j][i][1] = 255
+                        frame[j][i][2] = 255
+                j += int(aire / 2)
 

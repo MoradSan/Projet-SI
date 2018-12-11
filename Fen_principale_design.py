@@ -7,6 +7,8 @@
 # WARNING! All changes made in this file will be lost!
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtGui import QPalette
+
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -108,15 +110,29 @@ class Ui_MainWindow(object):
         self.label_etape4.setStyleSheet("font: 75 16pt \"Calibri\";")
         self.label_etape4.setObjectName("label_etape4")
         self.formLayout_etape4.setWidget(0, QtWidgets.QFormLayout.LabelRole, self.label_etape4)
-        self.radioButtonOui = QtWidgets.QRadioButton(self.verticalLayoutWidget)
-        self.radioButtonOui.setObjectName("radioButtonOui")
-        self.formLayout_etape4.setWidget(3, QtWidgets.QFormLayout.FieldRole, self.radioButtonOui)
         self.radioButtonNon = QtWidgets.QRadioButton(self.verticalLayoutWidget)
         self.radioButtonNon.setObjectName("radioButtonNon")
-        self.formLayout_etape4.setWidget(4, QtWidgets.QFormLayout.FieldRole, self.radioButtonNon)
+        self.formLayout_etape4.setWidget(3, QtWidgets.QFormLayout.FieldRole, self.radioButtonNon)
+        self.radioButtonOui = QtWidgets.QRadioButton(self.verticalLayoutWidget)
+        self.radioButtonOui.setObjectName("radioButtonOui")
+        self.formLayout_etape4.setWidget(4, QtWidgets.QFormLayout.FieldRole, self.radioButtonOui)
         self.label = QtWidgets.QLabel(self.verticalLayoutWidget)
         self.label.setObjectName("label")
         self.formLayout_etape4.setWidget(3, QtWidgets.QFormLayout.LabelRole, self.label)
+        self.pushButton_selectColor = QtWidgets.QPushButton(self.verticalLayoutWidget)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.pushButton_selectColor.sizePolicy().hasHeightForWidth())
+        self.pushButton_selectColor.setSizePolicy(sizePolicy)
+        self.pushButton_selectColor.setStyleSheet("background-color: rgb(200, 200, 200);")
+        self.pushButton_selectColor.setObjectName("pushButton_lancer")
+        self.formLayout_etape4.addWidget(self.pushButton_selectColor)
+        self.check_suppression_operator = QtWidgets.QCheckBox(self.verticalLayoutWidget)
+        self.check_suppression_operator.setText("Effacer l'opérateur (Attention : ralenti considérablement le traitement)")
+        self.formLayout_etape4.addWidget(self.check_suppression_operator)
+
+
         self.verticalLayout_gauche.addLayout(self.formLayout_etape4)
         self.line_etape4 = QtWidgets.QFrame(self.verticalLayoutWidget)
         font = QtGui.QFont()
@@ -179,14 +195,9 @@ class Ui_MainWindow(object):
         self.menubar.setObjectName("menubar")
         MainWindow.setMenuBar(self.menubar)
 
-        self.statusBar = QtWidgets.QStatusBar(self.centralwidget)
-        self.statusBar.setGeometry(QtCore.QRect(530, 570, 470, 26))
-        self.statusBar.setObjectName("statusBar")
-
-
-
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
+
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
@@ -211,4 +222,3 @@ class Ui_MainWindow(object):
         self.pushButton_lancer.setText(_translate("MainWindow", "Lancer le traitement"))
         self.label_zone.setText(_translate("MainWindow", "Zone d\'interêt:"))
         self.label_histoire.setText(_translate("MainWindow", "Histoire d\'exécution:"))
-
