@@ -1,6 +1,7 @@
 import Fen_principale_design
 from PyQt5 import QtGui, QtWidgets
 from PyQt5.QtWidgets import QApplication
+from PyQt5.QtWidgets import QApplication, QProgressDialog
 import os
 from ZoneInteret import *
 from PIL import Image
@@ -10,7 +11,7 @@ import algo_distance
 import algo_flots_optiques
 import remove_operateur
 import time
-def thread(video, unAlgo, frame):
+def thread(video, unAlgo, frame,pd):
 
 
     """
@@ -28,7 +29,22 @@ def thread(video, unAlgo, frame):
         Traitement de la video pour obtenir une liste de points
         qui peuvent etre dessine dans une courbe
     """
+    time.sleep(2)
+    pd.setValue(20)
+    time.sleep(2)
+    if(randint(0,9)<=2):
+
+        pd.setValue(30)
+
+    elif(randint(0,9)<=5):
+        pd.setValue(40)
+    else:
+        pd.setValue(50)
+
     ma_liste = unAlgo.traiterVideo(video, frame)
+    pd.setValue(99)
+    time.sleep(2)
+    pd.close()
     #Affichage du resultat
     pomme = affichage_resultat.affichage_graphique(video, frame)
     pomme.afficher(ma_liste)
@@ -187,13 +203,18 @@ class Fen_principale(QtWidgets.QMainWindow, Fen_principale_design.Ui_MainWindow)
 
             # Algorithme Distance
             if (algo == 1):
+                pd = QProgressDialog("Operation in progress.", "Cancel", 0, 100)
+                pd.setWindowTitle('En cours')
+                pd.show()
+                pd.setValue(10)
+
                 self.plainTextEdit_histoire.insertPlainText("\n" + "Application de l'algorithme Distances...")
                 try:
 
 
                     a = threading.Thread(None, thread, None, (),
                                          {'video': video_name, 'unAlgo': algo_distance.algo_distance(),
-                                          'frame': self.start_frame})
+                                          'frame': self.start_frame,'pd':pd})
                     cv2.imshow('Veuillez patienter svp', cv2.imread('img.jpg', cv2.WINDOW_AUTOSIZE))
                     a.start()
 
