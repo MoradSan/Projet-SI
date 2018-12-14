@@ -200,13 +200,13 @@ class Fen_principale(QtWidgets.QMainWindow, Fen_principale_design.Ui_MainWindow)
 
         # Si la vidéo existe, on lance un autre thread en exécutant le bon algo
         if (os.path.exists(video_name)):
-
-            # Algorithme Distance
-            if (algo == 1):
                 pd = QProgressDialog("Operation in progress.", "Cancel", 0, 100)
                 pd.setWindowTitle('En cours')
                 pd.show()
                 pd.setValue(10)
+            # Algorithme Distance
+            if (algo == 1):
+               
 
                 self.plainTextEdit_histoire.insertPlainText("\n" + "Application de l'algorithme Distances...")
                 try:
@@ -230,7 +230,7 @@ class Fen_principale(QtWidgets.QMainWindow, Fen_principale_design.Ui_MainWindow)
                 try:
                     a = threading.Thread(None, thread, None, (), {'video': video_name,
                                                                   'unAlgo': algo_flots_optiques.flot_optiques(),
-                                                                  'frame': self.start_frame})
+                                                                  'frame': self.start_frame,'pd':pd})
                     a.start()
                 except:
                     QMessageBox.warning(self, "Erreur", "Erreurs lors de l'exécution",
