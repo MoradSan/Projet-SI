@@ -1,7 +1,7 @@
 import Fen_principale_design
 from PyQt5 import QtGui, QtWidgets
-from PyQt5.QtWidgets import QApplication
 import os
+from PyQt5.QtWidgets import QApplication, QProgressDialog
 from ZoneInteret import *
 from PIL import Image
 import affichage_resultat
@@ -13,7 +13,7 @@ import time
 import numpy as np
 
 
-def thread(video, unAlgo, frame, pickedColor=None, supprOp=None):
+def thread(video, unAlgo, frame, pd, pickedColor=None, supprOp=None):
 
 
     """
@@ -31,6 +31,18 @@ def thread(video, unAlgo, frame, pickedColor=None, supprOp=None):
         Traitement de la video pour obtenir une liste de points
         qui peuvent etre dessine dans une courbe
     """
+    time.sleep(2)
+    pd.setValue(20)
+    time.sleep(2)
+    if randint(0, 9) <= 2:
+
+        pd.setValue(30)
+
+    elif randint(0, 9) <= 5:
+        pd.setValue(40)
+    else:
+        pd.setValue(50)
+
     if pickedColor is None:
         ma_liste = unAlgo.traiterVideo(video, frame)
     else:
@@ -40,7 +52,6 @@ def thread(video, unAlgo, frame, pickedColor=None, supprOp=None):
     # Affichage du resultat
     pomme = affichage_resultat.affichage_graphique(video, frame)
     pomme.afficher(ma_liste)
-
 
 def affichageFourrier(video, ma_liste):
         ma_liste2 = list()
@@ -104,7 +115,6 @@ class Fen_principale(QtWidgets.QMainWindow, Fen_principale_design.Ui_MainWindow)
         self.lowH = 0
         self.highH = 0
         self.start_frame = 3
-        self.picked_color = QtGui.QColor(170, 170, 100)
 
         # les widgets
         self.setupUi(self)
@@ -114,13 +124,7 @@ class Fen_principale(QtWidgets.QMainWindow, Fen_principale_design.Ui_MainWindow)
         self.group.setId(self.radioButtonOui, 0)
         self.group.setId(self.radioButtonNon, 1)
         self.radioButtonNon.setChecked(True)
-        self.pushButton_selectColor.setDisabled(True)
-        self.check_suppression_operator.setDisabled(True)
-        self.radioButtonOui.setDisabled(True)
-        self.radioButtonNon.setChecked(True)
-        self.radioButtonNon.setDisabled(True)
         self.plainTextEdit_histoire.setReadOnly(True)
-        self.comboBox_algo.currentIndexChanged.connect(self.comboBoxClicked)
 
         # les signaux
         self.pushButton_parcourir.clicked.connect(self.parcourir_clicked)
@@ -128,41 +132,7 @@ class Fen_principale(QtWidgets.QMainWindow, Fen_principale_design.Ui_MainWindow)
         self.pushButton_consulter.clicked.connect(self.zone_interet_consulter)
         self.pushButton_supprimer.clicked.connect(self.zone_interet_supprimer)
         self.pushButton_lancer.clicked.connect(self.on_myButton_clicked)
-        self.pushButton_selectColor.clicked.connect(self.openColorDialog)
-        self.radioButtonOui.clicked.connect(self.radioClicked)
-        self.radioButtonNon.clicked.connect(self.radioClicked)
 
-    def comboBoxClicked(self):
-        if self.comboBox_algo.itemText(self.comboBox_algo.currentIndex()) == "Distance":
-            self.pushButton_selectColor.setDisabled(True)
-            self.radioButtonOui.setDisabled(True)
-            self.radioButtonNon.setChecked(True)
-            self.radioButtonNon.setDisabled(True)
-            self.check_suppression_operator.setDisabled(True)
-        else:
-            self.radioButtonOui.setDisabled(False)
-            self.radioButtonNon.setDisabled(False)
-
-    def radioClicked(self):
-        if self.radioButtonOui.isChecked():
-            self.pushButton_selectColor.setDisabled(False)
-            self.check_suppression_operator.setDisabled(False)
-            self.pushButton_selectColor.setStyleSheet("background-color: rgb(" + str(self.picked_color.getRgb()[0]) +
-                                                      "," + str(self.picked_color.getRgb()[1]) +
-                                                      "," + str(self.picked_color.getRgb()[2]) + ");")
-        else:
-            self.pushButton_selectColor.setDisabled(True)
-            self.check_suppression_operator.setDisabled(True)
-            self.pushButton_selectColor.setStyleSheet("background-color: rgb(200, 200, 200);")
-
-
-    def openColorDialog(self):
-        col_dialog = QtWidgets.QColorDialog(self)
-        self.picked_color = col_dialog.getColor(self.picked_color)
-        if self.picked_color.isValid():
-            self.pushButton_selectColor.setStyleSheet("background-color: rgb(" + str(self.picked_color.getRgb()[0]) +
-                                                      "," + str(self.picked_color.getRgb()[1]) +
-                                                      "," + str(self.picked_color.getRgb()[2]) + ");")
 
 
     def parcourir_clicked(self):
@@ -255,7 +225,7 @@ class Fen_principale(QtWidgets.QMainWindow, Fen_principale_design.Ui_MainWindow)
         video_name = self.lineEdit_path.text()
 
         # si détecter l'opérateur est choisi
-        """if (self.group.checkedId() == 0):
+        if (self.group.checkedId() == 0):
 
             self.plainTextEdit_histoire.appendPlainText("Suppression de l'opérateur de la vidéo...")
             QApplication.processEvents()
@@ -272,15 +242,19 @@ class Fen_principale(QtWidgets.QMainWindow, Fen_principale_design.Ui_MainWindow)
             except:
                 QMessageBox.warning(self, "Erreur", "Erreurs lors de suppression de l'opérateur",
                                     QMessageBox.Ok)
-        """
+
 
         # Si la vidéo existe, on lance un autre thread en exécutant le bon algo
         if (os.path.exists(video_name)):
 
+            pd = QProgressDialog("Operation in progress.", "Cancel", 0, 100)
+            pd.setWindowTitle('En cours')
+            pd.show()
+            pd.setValue(10)
+
             pickedColor = self.picked_color
             if self.radioButtonNon.isChecked():
                 pickedColor = None
-
             # Algorithme Distance
             if (algo == 1):
                 self.plainTextEdit_histoire.insertPlainText("\n" + "Application de l'algorithme Distances...")
@@ -289,7 +263,7 @@ class Fen_principale(QtWidgets.QMainWindow, Fen_principale_design.Ui_MainWindow)
 
                     a = threading.Thread(None, thread, None, (),
                                          {'video': video_name, 'unAlgo': algo_distance.algo_distance(),
-                                          'frame': self.start_frame, 'pickedColor': pickedColor})
+                                          'frame': self.start_frame, 'pd':pd, 'pickedColor': pickedColor})
                     cv2.imshow('Veuillez patienter svp', cv2.imread('img.jpg', cv2.WINDOW_AUTOSIZE))
                     a.start()
 
@@ -306,6 +280,7 @@ class Fen_principale(QtWidgets.QMainWindow, Fen_principale_design.Ui_MainWindow)
                     a = threading.Thread(None, thread, None, (), {'video': video_name,
                                                                   'unAlgo': algo_flots_optiques.flot_optiques(),
                                                                   'frame': self.start_frame,
+                                                                  'pd':pd,
                                                                   'pickedColor': pickedColor,
                                                                   'supprOp': self.check_suppression_operator.isChecked()
                                                                   })
