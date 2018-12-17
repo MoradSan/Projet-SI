@@ -124,10 +124,11 @@ class affichage_graphique:
 
         #Heure locale en string
         localtime = time.localtime(time.time())
-        localtime_str = str(localtime.tm_year)+'_'+str(localtime.tm_mon)+'_'+ str(localtime.tm_mday)+'_'+str(localtime.tm_hour)+'h'+str(localtime.tm_min)+'m'+str(localtime.tm_sec)+'s'
+        localtime_str = str(localtime.tm_year) + '_' + str(localtime.tm_mon) + '_' + str(localtime.tm_mday) + '_' + \
+                        str(localtime.tm_hour) + 'h' + str(localtime.tm_min) + 'm' + str(localtime.tm_sec) + 's'
 
         #Initialisation du graphique
-        plt.axis([0, len(ma_liste) + 10, int(min(y)) - 10, int(max(y)) + 10])
+        plt.axis([0, len(ma_liste), y_min - y_min / 4, y_max + y_max / 4])
 
         #Titre des abscisses
         plt.xlabel("Nombre d'images")

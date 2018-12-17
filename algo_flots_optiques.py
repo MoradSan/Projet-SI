@@ -1,13 +1,14 @@
 import itertools
 
+from RGBToHSV import HSV
+from multiprocessing.pool import ThreadPool
+
 import cv2
 import numpy as np
 import math
+
 import ZoneInteret as zi
 import algo
-import threading
-from RGBToHSV import HSV
-from multiprocessing.pool import ThreadPool
 
 
 # Classe qui implemente l'algorithme Flot Optique
@@ -20,6 +21,7 @@ class flot_optiques(algo.algorithme):
     # Fonction pricipale pour traiter la video
     def traiterVideo(self, video, start_frame, colorOperateur=None, suppressionCouleur=False):
 
+        nbr_maxCorner = 100
         if colorOperateur is not None:
             #On converti d'abord la QColor en HSV
             COULEUR_INDESIRABLE = HSV(colorOperateur.red(), colorOperateur.green(), colorOperateur.blue())
@@ -34,7 +36,7 @@ class flot_optiques(algo.algorithme):
         # qualityLevel : influence la qualité du coin détecté
         # minDistance : distance minimum entre les détections
         # blockSiza : influence la qualité du calcul
-        feature_params = dict(maxCorners=100, qualityLevel=0.01, minDistance=7, blockSize=7)
+        feature_params = dict(maxCorners=nbr_maxCorner, qualityLevel=0.01, minDistance=7, blockSize=7)
 
         # Parametres pour Lucas Kanade optical flow
         # winSize : taille de la fenêtre de recherche du point proche
@@ -71,6 +73,8 @@ class flot_optiques(algo.algorithme):
         # Copie le tableau contenant la frame en le remplissant de 0
         mask = np.zeros_like(old_frame)
 
+        oldGx = -1
+        oldGy = -1
         boucle = True
         while boucle:
             # ret est égal à 0 si il n'y a plus de frame
@@ -81,8 +85,15 @@ class flot_optiques(algo.algorithme):
 
                 # converti la frame en niveau de gris
                 frame_gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+
                 # Détection des points
                 p1, st, err = cv2.calcOpticalFlowPyrLK(old_gray, frame_gray, p0, None, **lk_params)
+
+                # Si l'ensemble de point est vide, on relance une détection de points
+                # print(len(p1))
+                if p1 is None or len(p1) <= nbr_maxCorner / 2:
+                    p0 = cv2.goodFeaturesToTrack(old_gray, mask=None, **feature_params)
+                    p1, st, err = cv2.calcOpticalFlowPyrLK(old_gray, frame_gray, p0, None, **lk_params)
 
                 # Cas où l'ensemble de point n'est pas vide
                 if p1 is not None:
@@ -93,12 +104,13 @@ class flot_optiques(algo.algorithme):
                     norme_total = 0
                     X = 0
                     Y = 0
+                    Gx = 0
+                    Gy = 0
                     nombre_points = 0
                     # Parcours de l'ensemble des points
                     for i, (new, old) in enumerate(zip(good_new, good_old)):
                         # Récupération des coordonnées des deux points
                         a, b = new.ravel()
-                        c, d = old.ravel()
                         # Cas où on ne veut pas prendre en compte l'opérateur
                         if colorOperateur is not None:
                             # On fait la moyenne de couleurs des points aux alentours du point de la nouvelle frame
@@ -111,22 +123,32 @@ class flot_optiques(algo.algorithme):
                             # Si il ne s'agit pas de la couleur que l'on veut éviter, on l'ajoute à notre norme moyenne
                             # et on le dessine
                             if hsv is not None and not isRightColor(hsv, COULEUR_INDESIRABLE):
-                                X += a
-                                Y += b
+                                X += (a - param[0]) / param[2]  # On ramène par rapport à la taille de la zone d'intérêt
+                                Y += (b - param[1]) / param[3]
+                                Gx += a
+                                Gy += b
                                 nombre_points += 1
-                                cv2.line(mask, (a, b), (c, d), color[i].tolist(), 2)
-                                cv2.circle(frame, (a, b), 5, color[i].tolist(), -1)
+                                #   cv2.line(mask, (a, b), (c, d), color[i].tolist(), 2)
+                                cv2.circle(frame, (a, b), 3, color[i].tolist(), -1)
                         # Sinon on prend tout en compte
                         else:
-                            X += a
-                            Y += b
+                            X += (a - param[0]) / param[2]  # On ramène par rapport à la taille de la zone d'intérêt
+                            Y += (b - param[1]) / param[3]
+                            Gx += a
+                            Gy += b
                             nombre_points += 1
-                            cv2.line(mask, (a, b), (c, d), color[i].tolist(), 2)
-                            cv2.circle(frame, (a, b), 5, color[i].tolist(), -1)
+                            #   cv2.line(mask, (a, b), (c, d), color[i].tolist(), 2)
+                            cv2.circle(frame, (a, b), 3, color[i].tolist(), -1)
 
-                    # Pour cette frame on calcule la norme du vecteur centre de gravité du déplacement entre
-                    # les deux frames
                     if nombre_points > 0:
+                        # Affichage du point de gravité et de son déplacement
+                        cv2.circle(frame, (int(Gx/nombre_points), int(Gy/nombre_points)), 8, (0, 0, 255), -1)
+                        if oldGx != -1 and oldGy != -1:
+                            cv2.line(mask, (int(oldGx/nombre_points), int(oldGy/nombre_points)),
+                                     (int(Gx / nombre_points), int(Gy / nombre_points)), (25, 25, 200), 2)
+                        oldGx = Gx
+                        oldGy = Gy
+
                         norme_total += math.sqrt((X/nombre_points) ** 2 + (Y/nombre_points) ** 2)
                         ma_liste.append(norme_total)
 
@@ -139,9 +161,7 @@ class flot_optiques(algo.algorithme):
                         break
 
                     p0 = good_new.reshape(-1, 1, 2)
-                # Si l'ensemble de point est vide, on relance une détection de points
-                else:
-                    p0 = cv2.goodFeaturesToTrack(old_gray, mask=None, **feature_params)
+
                 # La deuxième frame prend la place de la premier
                 old_gray = frame_gray.copy()
             #Puis on relit une nouvelle frame
@@ -216,7 +236,7 @@ def moyenne_pixels_alentours(ptx, pty, width, height, frame, aire=5):
 
     return int(r/count), int(g/count), int(b/count)
 
-# Fonction qui supprime les pixels alentours si ils sont de la bonne couleur (les applique en blanc
+# Fonction qui appelle le thread thread_suppr_coul en multithreading
 def suppression_couleur(frame, width, height, hsv_indesirable, aire=5):
 
     pool = ThreadPool(20)
@@ -224,12 +244,11 @@ def suppression_couleur(frame, width, height, hsv_indesirable, aire=5):
     pool.starmap(thread_suppr_coul, zip(itertools.repeat(frame), itertools.repeat(width), itertools.repeat(height),
                                         itertools.repeat(hsv_indesirable), itertools.repeat(aire),
                                         [(0, 0), (0, 1), (1, 0), (1, 1)]))
-
     pool.close()
     pool.join()
     return frame
 
-
+# Thread qui supprime les pixels alentours si ils sont de la bonne couleur (les applique en blanc
 def thread_suppr_coul(frame, width, height, hsv_indesirable, aire, partOfFrame):
     for i in range(int(width / 2 * partOfFrame[0]), int(width / 2 + (width / 2 * partOfFrame[0]))):
         for j in range(int(height / 2 * partOfFrame[1]), int(height / 2 + (height / 2 * partOfFrame[1]))):
@@ -241,4 +260,3 @@ def thread_suppr_coul(frame, width, height, hsv_indesirable, aire, partOfFrame):
                         frame[j][i][1] = 255
                         frame[j][i][2] = 255
                 j += int(aire / 2)
-

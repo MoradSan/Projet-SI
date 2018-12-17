@@ -10,6 +10,7 @@ import algo_distance
 import algo_flots_optiques
 import remove_operateur
 import time
+import numpy as np
 
 
 def thread(video, unAlgo, frame, pickedColor=None, supprOp=None):
@@ -34,9 +35,54 @@ def thread(video, unAlgo, frame, pickedColor=None, supprOp=None):
         ma_liste = unAlgo.traiterVideo(video, frame)
     else:
         ma_liste = unAlgo.traiterVideo(video, frame, pickedColor, supprOp)
-    #Affichage du resultat
+    # Affichage de Fournier
+    affichageFourrier(video, ma_liste)
+    # Affichage du resultat
     pomme = affichage_resultat.affichage_graphique(video, frame)
     pomme.afficher(ma_liste)
+
+
+def affichageFourrier(video, ma_liste):
+        ma_liste2 = list()
+        # Number of samplepoints
+        cap2 = cv2.VideoCapture(video)
+        cap2.set(cv2.CAP_PROP_POS_AVI_RATIO, 1)
+        videoTotalDuration = cap2.get(cv2.CAP_PROP_POS_MSEC)
+
+        for i in range(len(ma_liste)):
+            ma_liste2.append(ma_liste[i])
+
+        alpha = 10
+
+        nc = len(ma_liste2)
+        dt = 0.1
+        tmax = (nc - 1) * dt + nc * dt
+        tmin = 0
+
+        # definition d'un signal
+        x = ma_liste2
+        t = np.linspace(tmin, tmax, nc)
+
+        plt.subplot(411)
+        plt.plot(t, x)
+
+        a = x
+
+        A = np.fft.fft(a)
+        # on effectue un fftshift pour positionner la frequence zero au centre
+        X = dt * np.fft.fftshift(A)
+
+        # calcul des frequences avec fftfreq
+        n = t.size
+        freq = np.fft.fftfreq(n, d=dt)
+        f = np.fft.fftshift(freq)
+
+        # comparaison avec la solution exacte
+        plt.subplot(413)
+        plt.plot(f, np.real(X), label="fft")
+        plt.legend()
+
+        plt.show()
 
 class Fen_principale(QtWidgets.QMainWindow, Fen_principale_design.Ui_MainWindow):
 
