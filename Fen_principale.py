@@ -293,7 +293,7 @@ class Fen_principale(QtWidgets.QMainWindow, Fen_principale_design.Ui_MainWindow)
                     a = threading.Thread(None, thread, None, (),
                                          {'video': video_name, 'unAlgo': algo_distance.algo_distance(),
                                           'frame': self.start_frame, 'pd':pd, 'pickedColor': pickedColor})
-                    cv2.imshow('Veuillez patienter svp', cv2.imread('img.jpg', cv2.WINDOW_AUTOSIZE))
+                   
                     a.start()
 
 
