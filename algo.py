@@ -14,7 +14,7 @@ class algorithme():
 
     #doit retourner une liste
     @abstractmethod
-    def traiterVideo(self,video,start_frame, colorOperateur):
+    def traiterVideo(self,video,start_frame, colorOperateur,pd):
         """
         Méthode pour traiter la vidéo.
         Le retour est une liste des points qui peuvent être dessinés dans une courbe
