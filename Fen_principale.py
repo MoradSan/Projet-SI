@@ -32,17 +32,7 @@ def thread(video, unAlgo, frame, pd, pickedColor=None, supprOp=None):
         Traitement de la video pour obtenir une liste de points
         qui peuvent etre dessine dans une courbe
     """
-    time.sleep(2)
-    pd.setValue(20)
-    time.sleep(2)
-    if rd.randint(0, 9) <= 2:
-
-        pd.setValue(30)
-
-    elif rd.randint(0, 9) <= 5:
-        pd.setValue(40)
-    else:
-        pd.setValue(50)
+   
 
     if pickedColor is None:
         ma_liste = unAlgo.traiterVideo(video, frame)
@@ -279,7 +269,7 @@ class Fen_principale(QtWidgets.QMainWindow, Fen_principale_design.Ui_MainWindow)
             pd = QProgressDialog("Operation in progress.", "Cancel", 0, 100)
             pd.setWindowTitle('En cours')
             pd.show()
-            pd.setValue(10)
+            pd.setValue(0)
 
             pickedColor = self.picked_color
             if self.radioButtonNon.isChecked():
