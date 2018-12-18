@@ -6,7 +6,8 @@ from matplotlib.widgets import Cursor
 import numpy as np
 import cv2
 import time
-
+from dtw import dtw
+from pylab import norm
 
 class affichage_graphique:
     """
@@ -108,6 +109,22 @@ class affichage_graphique:
         """
         #Variables utiles
         #Tableau de la même taille que notre liste
+        
+        #creer un tableau  contenant de la taille de ma_liste contenant des 0
+        zero=np.array(range(len(ma_liste))).reshape(-1,1)
+        zero.fill(0)
+        #Recuperer les donnees de la poule calme
+        calme=np.loadtxt('poule_calme.txt')
+        current = np.array(ma_liste).reshape(-1,1)
+
+        #Distance 0 et poule calme
+        dist, cost, acc, path =dtw(zero, calme, dist=lambda zero, calme: norm(zero - calme, ord=1))
+        print('la distance par rapport a la poule calme ',dist)
+
+        # Distance 0 et poule actuelle
+        dist, cost, acc, path = dtw(zero, current, dist=lambda zero, current: norm(zero - current, ord=1))
+        print('la distance par rapport a la poule actuelle ', dist)
+
         x = np.array(range(len(ma_liste)))
 
         #Tableau copie de notre liste
