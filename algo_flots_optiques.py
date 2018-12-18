@@ -13,7 +13,10 @@ import algo
 
 # Classe qui implemente l'algorithme Flot Optique
 class flot_optiques(algo.algorithme):
-
+    
+    incr = 1
+    cameracopie = cv2.VideoCapture(0)
+    
     # Retourner le nom d'algorithme
     def get_nomAlgo(self):
         return "Flot optiques"
@@ -27,10 +30,25 @@ class flot_optiques(algo.algorithme):
             COULEUR_INDESIRABLE = HSV(colorOperateur.red(), colorOperateur.green(), colorOperateur.blue())
         else:
             COULEUR_INDESIRABLE = None
-
+        
+        global incr
         ma_liste = list()
         cap = cv2.VideoCapture(video)
-
+        
+        #Copie de la video pour connaitre le nombre de frame
+        cameracopie = cv2.VideoCapture(video)
+        ret2, fraaame = cameracopie.read()
+        global incr
+        incr = 1
+        incr2 = 1
+        while ret2:
+            ret2, fraaame = cameracopie.read()
+            incr = incr + 1
+            incr2 = incr2 + 1
+            if pd.value() < 30 and incr2 > 30:
+                pd.setValue(pd.value() + 1)
+                incr2 = 0
+        incrval = (70 / incr)
         # Parametres pour ShiTomasi Corner Detection
         # maxcorner : nombre maximal de points
         # qualityLevel : influence la qualité du coin détecté
@@ -172,6 +190,10 @@ class flot_optiques(algo.algorithme):
                 frame = frame[param[1]:param[1] + param[3], param[0]:param[0] + param[2]]
             else:
                 boucle = False
+            if pd.value()<99 and int(incrval)>=1:
+                incrval=70/incr
+                pd.setValue(pd.value()+1)
+            incrval += 70/incr
 
         cap.release()
         cv2.destroyAllWindows()
