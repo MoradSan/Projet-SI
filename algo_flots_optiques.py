@@ -15,7 +15,7 @@ import algo
 class flot_optiques(algo.algorithme):
     
     incr = 1
-    cameracopie = cv2.VideoCapture(0)
+    cameracopie = cv2.VideoCapture()
     
     # Retourner le nom d'algorithme
     def get_nomAlgo(self):
