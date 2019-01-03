@@ -19,7 +19,7 @@ class algo_distance(algo.algorithme):
     @version 2.0
     """
     incr=1
-    cameracopie=cv2.VideoCapture(0)
+    cameracopie=cv2.VideoCapture()
     def get_nomAlgo(self):
         return "distance"
 
