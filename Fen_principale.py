@@ -35,9 +35,9 @@ def thread(video, unAlgo, frame, pd, pickedColor=None, supprOp=None):
    
 
     if pickedColor is None:
-        ma_liste = unAlgo.traiterVideo(video, frame)
+        ma_liste = unAlgo.traiterVideo(video, frame,pd)
     else:
-        ma_liste = unAlgo.traiterVideo(video, frame, pickedColor, supprOp)
+        ma_liste = unAlgo.traiterVideo(video, frame, pickedColor, supprOp,pd)
 
     pd.setValue(99)
     time.sleep(2)
