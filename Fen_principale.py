@@ -1,3 +1,5 @@
+from PyQt5.QtCore import QObject, Qt
+
 import Fen_principale_design
 from PyQt5 import QtGui, QtWidgets
 import os
@@ -8,46 +10,59 @@ import affichage_resultat
 import threading
 import algo_distance
 import algo_flots_optiques
-import remove_operateur
 import time
 import numpy as np
 import random as rd
+from PyQt5 import QtCore
+import matplotlib.pyplot as plt
 
 
-def thread(video, unAlgo, frame, pd, pickedColor=None, supprOp=None):
+class Thread(QObject):
+
+    def __init__(self, pd):
+        super().__init__()
+        self.pd = pd
+    trigger = QtCore.pyqtSignal(float)
+
+    def my_thread(self, video, unAlgo, frame, pickedColor=None, supprOp=None):
 
 
-    """
-        Cette méthode permet de créer un job avec un vidéo, un algo et le frame à commencer.
-        Ce job peut être utilisé dans un thread pour gagner la vitesse de calcul
+        """
+            Cette méthode permet de créer un job avec un vidéo, un algo et le frame à commencer.
+            Ce job peut être utilisé dans un thread pour gagner la vitesse de calcul
 
-        :param video: la vidéo à traiter
-        :param unAlgo: l'algo
-        :param frame: le frame à commencer
-        :return:
-    """
+            :param video: la vidéo à traiter
+            :param unAlgo: l'algo
+            :param frame: le frame à commencer
+            :return:
+        """
 
 
-    """
-        Traitement de la video pour obtenir une liste de points
-        qui peuvent etre dessine dans une courbe
-    """
-   
+        """
+            Traitement de la video pour obtenir une liste de points
+            qui peuvent etre dessine dans une courbe
+        """
 
-    if pickedColor is None:
-        ma_liste = unAlgo.traiterVideo(video, frame,pd)
-    else:
-        ma_liste = unAlgo.traiterVideo(video, frame, pickedColor, supprOp,pd)
+        self.trigger.connect(self.handleProgressChange)
 
-    pd.setValue(99)
-    time.sleep(2)
-    pd.close()
 
-    # Affichage de Fournier
-    affichageFourrier(video, ma_liste)
-    # Affichage du resultat
-    pomme = affichage_resultat.affichage_graphique(video, frame)
-    pomme.afficher(ma_liste)
+        if pickedColor is None:
+            ma_liste = unAlgo.traiterVideo(video, frame, self.trigger)
+        else:
+            ma_liste = unAlgo.traiterVideo(video, frame, self.trigger, pickedColor, supprOp)
+
+        self.pd.setValue(99)
+        time.sleep(2)
+        self.pd.close()
+
+        # Affichage de Fournier
+        affichageFourrier(video, ma_liste)
+        # Affichage du resultat
+        pomme = affichage_resultat.affichage_graphique(video, frame)
+        pomme.afficher(ma_liste)
+
+    def handleProgressChange(self, progress):
+        self.pd.setValue(progress)
 
 def affichageFourrier(video, ma_liste):
         ma_liste2 = list()
@@ -256,6 +271,10 @@ class Fen_principale(QtWidgets.QMainWindow, Fen_principale_design.Ui_MainWindow)
         :return:
         """
 
+        #On ferme les deux fenêtres de résultats précédents
+        plt.close("all")
+
+
         # Choix de l'algorithme
         self.plainTextEdit_histoire.setPlainText("")
         algo = self.comboBox_algo.currentIndex() + 1
@@ -266,8 +285,9 @@ class Fen_principale(QtWidgets.QMainWindow, Fen_principale_design.Ui_MainWindow)
         # Si la vidéo existe, on lance un autre thread en exécutant le bon algo
         if (os.path.exists(video_name)):
 
-            pd = QProgressDialog("Operation in progress.", "Cancel", 0, 100)
-            pd.setWindowTitle('En cours')
+            pd = QProgressDialog(None, None, 0, 100)
+            pd.setWindowTitle('Opération en cours')
+            pd.setWindowFlag(QtCore.Qt.WindowCloseButtonHint, False)
             pd.show()
             pd.setValue(0)
 
@@ -279,11 +299,11 @@ class Fen_principale(QtWidgets.QMainWindow, Fen_principale_design.Ui_MainWindow)
                 self.plainTextEdit_histoire.insertPlainText("\n" + "Application de l'algorithme Distances...")
                 try:
 
-
-                    a = threading.Thread(None, thread, None, (),
+                    thread = Thread(pd)
+                    a = threading.Thread(None, thread.my_thread, None, (),
                                          {'video': video_name, 'unAlgo': algo_distance.algo_distance(),
-                                          'frame': self.start_frame, 'pd':pd, 'pickedColor': pickedColor})
-                   
+                                          'frame': self.start_frame, 'pickedColor': pickedColor})
+
                     a.start()
 
 
@@ -296,10 +316,10 @@ class Fen_principale(QtWidgets.QMainWindow, Fen_principale_design.Ui_MainWindow)
             elif (algo == 2):
                 self.plainTextEdit_histoire.insertPlainText("\n" + "Application de l'algorithme flots optiques...")
                 try:
-                    a = threading.Thread(None, thread, None, (), {'video': video_name,
+                    thread = Thread(pd)
+                    a = threading.Thread(None, thread.my_thread, None, (), {'video': video_name,
                                                                   'unAlgo': algo_flots_optiques.flot_optiques(),
                                                                   'frame': self.start_frame,
-                                                                  'pd':pd,
                                                                   'pickedColor': pickedColor,
                                                                   'supprOp': self.check_suppression_operator.isChecked()
                                                                   })

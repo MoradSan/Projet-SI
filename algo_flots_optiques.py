@@ -2,18 +2,17 @@ import itertools
 
 from RGBToHSV import HSV
 from multiprocessing.pool import ThreadPool
-
 import cv2
 import numpy as np
 import math
-
 import ZoneInteret as zi
 import algo
+from PyQt5 import QtGui
 
 
 # Classe qui implemente l'algorithme Flot Optique
 class flot_optiques(algo.algorithme):
-    
+
     incr = 1
     cameracopie = cv2.VideoCapture()
     
@@ -22,8 +21,9 @@ class flot_optiques(algo.algorithme):
         return "Flot optiques"
 
     # Fonction pricipale pour traiter la video
-    def traiterVideo(self, video, start_frame, colorOperateur=None, suppressionCouleur=False,pd):
+    def traiterVideo(self, video, start_frame, trigger, colorOperateur=None, suppressionCouleur=False):
 
+        progress = 0
         nbr_maxCorner = 100
         if colorOperateur is not None:
             #On converti d'abord la QColor en HSV
@@ -45,9 +45,11 @@ class flot_optiques(algo.algorithme):
             ret2, fraaame = cameracopie.read()
             incr = incr + 1
             incr2 = incr2 + 1
-            if pd.value() < 30 and incr2 > 30:
-                pd.setValue(pd.value() + 1)
+            if progress < 30 and incr2 > 30:
+                progress += 1
                 incr2 = 0
+                trigger.emit(progress)
+
         incrval = (70 / incr)
         # Parametres pour ShiTomasi Corner Detection
         # maxcorner : nombre maximal de points
@@ -190,9 +192,13 @@ class flot_optiques(algo.algorithme):
                 frame = frame[param[1]:param[1] + param[3], param[0]:param[0] + param[2]]
             else:
                 boucle = False
-            if pd.value()<99 and int(incrval)>=1:
+
+            # A la fin on
+            if progress < 99 and int(incrval) >= 1:
                 incrval=70/incr
-                pd.setValue(pd.value()+1)
+                progress += 1
+                trigger.emit(progress)
+
             incrval += 70/incr
 
         cap.release()

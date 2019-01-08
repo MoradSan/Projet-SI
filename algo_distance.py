@@ -6,8 +6,8 @@ import os.path
 import cv2
 import numpy as np
 import ZoneInteret as zi
-from matplotlib import pyplot as plt
-from tkinter import *
+
+from PyQt5.QtCore import *
 
 
 class algo_distance(algo.algorithme):
@@ -23,9 +23,9 @@ class algo_distance(algo.algorithme):
     def get_nomAlgo(self):
         return "distance"
 
-    def traiterVideo(self, video, start_frame,pd):
+    def traiterVideo(self, video, start_frame, trigger):
 
-        
+        progress = 0
         global incr
         ma_liste = list()
         if type(video) is str:
@@ -42,12 +42,14 @@ class algo_distance(algo.algorithme):
                 ret2, fraaame = cameracopie.read()
                 incr = incr + 1
                 incr2=incr2+1
-                if pd.value() < 30 and incr2 > 30:
-                    pd.setValue(pd.value() + 1)
+                if progress < 30 and incr2 > 30:
+                    progress += 1
                     incr2=0
+                    trigger.emit(progress)
         else:
             cap = video
-        pd.setValue(30)
+        progresse = 30
+        trigger.emit(progress)
         incrval = (70 / incr)
         # Detection de l'opérateur
         # On ne commence le traitement sur la première image dépourvu d'opérateur
@@ -87,10 +89,11 @@ class algo_distance(algo.algorithme):
             # On applique les paramètres à chaque frame
             if ret and zi.ZoneInteret.verifier_presence_fichier_ini():
                 frame = frame[param[1]:param[1] + param[3], param[0]:param[0] + param[2]]
-            if pd.value() < 99 and int(incrval)>=1:
+            if progress < 99 and int(incrval)>=1:
                 incrval=70/incr
-                pd.setValue(pd.value()+1)
+                progress += 1
             incrval += 70/incr
+            trigger.emit(progress)
         cap.release()
         cv2.destroyAllWindows()
         return ma_liste

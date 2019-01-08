@@ -201,7 +201,7 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
+        MainWindow.setWindowTitle(_translate("MainWindow", "Quantificateur de stresse de volaille"))
         self.label_choisir_video.setText(_translate("MainWindow", "Choisir une vidéo:    "))
         self.pushButton_parcourir.setText(_translate("MainWindow", "Parcourir"))
         self.label_path.setText(_translate("MainWindow", "Path de vidéo: "))
