@@ -22,7 +22,7 @@ class flot_optiques(algo.algorithme):
         return "Flot optiques"
 
     # Fonction pricipale pour traiter la video
-    def traiterVideo(self, video, start_frame, colorOperateur=None, suppressionCouleur=False,pd):
+    def traiterVideo(self, video, start_frame,pd, colorOperateur=None, suppressionCouleur=False):
 
         nbr_maxCorner = 100
         if colorOperateur is not None:
