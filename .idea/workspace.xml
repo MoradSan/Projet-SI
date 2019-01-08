@@ -1,11 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="bf90b450-ef47-4f7f-8f1c-6f56c98886c9" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/algo_flots_optiques.py" beforeDir="false" afterPath="$PROJECT_DIR$/algo_flots_optiques.py" afterDir="false" />
-    </list>
-    <list id="b6f89be6-2b48-48d3-9afc-172f89c96137" name="Revert: 'modif'" comment="">
+    <list default="true" id="69904bd4-96b0-4537-8d39-17efb684be72" name="Default Changelist" comment="L'opérateur peut êre ignoré ou supprimé dans l'algo flux optique">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Fen_principale.py" beforeDir="false" afterPath="$PROJECT_DIR$/Fen_principale.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Fen_principale_design.py" beforeDir="false" afterPath="$PROJECT_DIR$/Fen_principale_design.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TestScriptFromInternet.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/affichage_resultat.py" beforeDir="false" afterPath="$PROJECT_DIR$/affichage_resultat.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/algo.py" beforeDir="false" afterPath="$PROJECT_DIR$/algo.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/algo_distance.py" beforeDir="false" afterPath="$PROJECT_DIR$/algo_distance.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/algo_flots_optiques.py" beforeDir="false" afterPath="$PROJECT_DIR$/algo_flots_optiques.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/img.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/img2.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/points.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/remove_operateur.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/resultats/2018_11_12_11h5m18s.pdf" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/resultats/2018_11_13_11h26m5s.pdf" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/resultats/2018_11_13_12h23m42s.pdf" beforeDir="false" />
@@ -30,10 +39,27 @@
       <change beforePath="$PROJECT_DIR$/resultats/2018_11_20_18h11m12s.pdf" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/resultats/2018_11_20_18h15m18s.pdf" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/resultats/2018_11_20_18h2m13s.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resultats/2018_11_8_19h22m6s.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resultats/2018_11_8_19h28m46s.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resultats/2018_11_8_22h12m18s.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resultats/2018_11_8_22h12m40s.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resultats/2018_11_8_22h23m37s.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resultats/2018_11_8_22h24m45s.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resultats/2018_11_8_22h27m13s.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resultats/2018_11_8_22h28m13s.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resultats/2018_11_8_22h29m14s.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resultats/2018_11_8_22h52m25s.pdf" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/resultats/2018_11_9_10h7m22s.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resultats/2018_11_9_8h33m35s.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resultats/2018_11_9_8h35m2s.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resultats/2018_11_9_8h38m36s.pdf" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/resultats/2018_11_9_9h33m35s.pdf" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/resultats/2018_11_9_9h35m53s.pdf" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/resultats/2018_11_9_9h3m31s.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/waiting.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/zi/image_modele.png" beforeDir="false" afterPath="$PROJECT_DIR$/zi/image_modele.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/zi/image_zone_interet.png" beforeDir="false" afterPath="$PROJECT_DIR$/zi/image_zone_interet.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/zi/param.ini" beforeDir="false" afterPath="$PROJECT_DIR$/zi/param.ini" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -45,42 +71,40 @@
     <session id="-1590960983">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="3" />
-          <entry key="project.open.time.17" value="1" />
-          <entry key="project.open.time.24" value="1" />
+          <entry key="project.closed" value="14" />
+          <entry key="project.open.time.0" value="1" />
+          <entry key="project.open.time.1" value="1" />
+          <entry key="project.open.time.17" value="2" />
+          <entry key="project.open.time.21" value="4" />
+          <entry key="project.open.time.22" value="1" />
+          <entry key="project.open.time.24" value="2" />
+          <entry key="project.open.time.26" value="1" />
           <entry key="project.open.time.3" value="1" />
-          <entry key="project.opened" value="3" />
+          <entry key="project.open.time.70" value="1" />
+          <entry key="project.open.time.8" value="2" />
+          <entry key="project.opened" value="16" />
         </counts>
       </usages-collector>
-    </session>
-    <session id="1591269453">
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="py" value="17" />
+          <entry key="py" value="30" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="Python" value="17" />
+          <entry key="Python" value="30" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="py" value="839" />
+          <entry key="py" value="5377" />
+          <entry key="txt" value="157" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="Python" value="839" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.lifecycle.project">
-        <counts>
-          <entry key="project.closed" value="6" />
-          <entry key="project.open.time.35" value="1" />
-          <entry key="project.open.time.38" value="1" />
-          <entry key="project.open.time.40" value="1" />
-          <entry key="project.opened" value="3" />
+          <entry key="PLAIN_TEXT" value="157" />
+          <entry key="Python" value="5377" />
         </counts>
       </usages-collector>
     </session>
@@ -88,61 +112,81 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/RGBToHSV.py">
-          <provider selected="true" editor-type-id="text-editor" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Fen_principale.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="68">
-              <caret line="4" selection-start-line="4" selection-end-line="4" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/main.py">
+        <entry file="file://$PROJECT_DIR$/affichage_resultat.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="17">
-              <caret line="1" selection-start-line="1" selection-end-line="1" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/algo_flots_optiques.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2098">
-              <caret line="210" column="81" lean-forward="true" selection-start-line="210" selection-start-column="81" selection-end-line="210" selection-end-column="81" />
+              <caret line="1" column="25" lean-forward="true" selection-start-line="1" selection-start-column="25" selection-end-line="2" selection-end-column="31" />
               <folding>
-                <element signature="e#0#10#0" expanded="true" />
+                <element signature="e#45#76#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/ZoneInteret.py">
+        <entry file="file://$PROJECT_DIR$/algo_flots_optiques.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="34">
-              <caret line="2" selection-start-line="2" selection-end-line="2" />
+            <state relative-caret-position="170">
+              <caret line="10" selection-start-line="10" selection-end-line="10" />
+              <folding>
+                <element signature="e#0#16#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/Fen_principale.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="281">
+              <caret line="274" column="24" selection-start-line="274" selection-start-column="24" selection-end-line="274" selection-end-column="24" />
+              <folding>
+                <element signature="e#0#36#0" expanded="true" />
+                <marker date="1546946950190" expanded="true" signature="497:523" ph="..." />
+                <marker date="1546946950190" expanded="true" signature="637:648" ph="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Fen_principale_design.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="301">
+              <caret line="203" column="97" selection-start-line="203" selection-start-column="97" selection-end-line="203" selection-end-column="97" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/algo_distance.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="595">
+              <caret line="47" column="41" selection-start-line="47" selection-start-column="33" selection-end-line="47" selection-end-column="41" />
+              <folding>
+                <element signature="e#46#57#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
     </leaf>
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Setup Script" />
+      </list>
+    </option>
+  </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>histo</find>
-      <find>Hline</find>
-      <find>self.line</find>
-      <find>self.plainTextEdit_histoire</find>
-      <find>statu</find>
-      <find>affichage</find>
       <find>unAlgo</find>
-      <find>start_frame</find>
+      <find>radio</find>
+      <find>randint</find>
+      <find>dtw</find>
+      <find>pd</find>
+      <find>thread</find>
       <find>progress</find>
     </findStrings>
   </component>
@@ -152,18 +196,22 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
+        <option value="$PROJECT_DIR$/setup.py" />
+        <option value="$PROJECT_DIR$/affichage_resultat.py" />
+        <option value="$PROJECT_DIR$/main.py" />
+        <option value="$PROJECT_DIR$/algo.py" />
+        <option value="$PROJECT_DIR$/algo_distance.py" />
         <option value="$PROJECT_DIR$/Fen_principale_design.py" />
-        <option value="$PROJECT_DIR$/Fen_principale.py" />
         <option value="$PROJECT_DIR$/algo_flots_optiques.py" />
+        <option value="$PROJECT_DIR$/Fen_principale.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-7" />
-    <option name="width" value="526" />
-    <option name="height" value="371" />
+    <option name="x" value="953" />
+    <option name="width" value="974" />
+    <option name="height" value="1047" />
   </component>
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
@@ -184,7 +232,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="last_opened_file_path" value="$USER_HOME$/Python/TP1" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RunDashboard">
@@ -200,16 +248,16 @@
     </option>
   </component>
   <component name="RunManager">
-    <configuration name="main" type="PythonConfigurationType" factoryName="Python">
+    <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="Projet-SI" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
-      <option name="SDK_HOME" value="C:\Users\MariamK\AppData\Local\Programs\Python\Python37-32\python.exe" />
+      <option name="SDK_HOME" value="" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="false" />
+      <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main.py" />
@@ -221,36 +269,62 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.main" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SvnConfiguration">
     <configuration />
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="bf90b450-ef47-4f7f-8f1c-6f56c98886c9" name="Default Changelist" comment="" />
-      <changelist id="b6f89be6-2b48-48d3-9afc-172f89c96137" name="Revert: 'modif'" comment="" />
-      <created>1539078924722</created>
+      <changelist id="69904bd4-96b0-4537-8d39-17efb684be72" name="Default Changelist" comment="" />
+      <created>1543243056754</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1539078924722</updated>
+      <updated>1543243056754</updated>
     </task>
+    <task id="LOCAL-00001" summary="L'opérateur peut êre ignoré ou supprimé dans l'algo flux optique">
+      <created>1544539483298</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1544539483298</updated>
+    </task>
+    <task id="LOCAL-00002" summary="L'opérateur peut êre ignoré ou supprimé dans l'algo flux optique">
+      <created>1545058274005</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1545058274005</updated>
+    </task>
+    <task id="LOCAL-00003" summary="L'opérateur peut êre ignoré ou supprimé dans l'algo flux optique">
+      <created>1545147101514</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1545147101514</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.08324552" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.11643836" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
-      <window_info anchor="bottom" id="Messages" />
       <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" weight="0.3295082" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.24590164" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32321042" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.29284164" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4262473" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info active="true" anchor="bottom" id="Version Control" order="7" visible="true" weight="0.329718" />
+      <window_info anchor="bottom" id="Version Control" order="7" weight="0.37310195" />
       <window_info anchor="bottom" id="Terminal" order="8" />
       <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
       <window_info anchor="bottom" id="Python Console" order="10" />
@@ -260,7 +334,6 @@
     </layout>
   </component>
   <component name="Vcs.Log.History.Properties">
-    <option name="SHOW_OTHER_BRANCHES" value="true" />
     <option name="COLUMN_ORDER">
       <list>
         <option value="0" />
@@ -270,49 +343,165 @@
       </list>
     </option>
   </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="RECENTLY_FILTERED_USER_GROUPS">
+                <collection />
+              </option>
+              <option name="RECENTLY_FILTERED_BRANCH_GROUPS">
+                <collection />
+              </option>
+              <option name="COLUMN_ORDER">
+                <list>
+                  <option value="0" />
+                  <option value="1" />
+                  <option value="2" />
+                  <option value="3" />
+                </list>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
   </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="L'opérateur peut êre ignoré ou supprimé dans l'algo flux optique" />
+    <option name="LAST_COMMIT_MESSAGE" value="L'opérateur peut êre ignoré ou supprimé dans l'algo flux optique" />
+  </component>
   <component name="editorHistoryManager">
-    <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python37-32/Lib/threading.py" />
-    <entry file="file://$PROJECT_DIR$/algo_distance.py">
+    <entry file="file://$PROJECT_DIR$/../anthony_tuininga-cx_freeze-e1ba6ec6eaad/anthony_tuininga-cx_freeze-e1ba6ec6eaad/setup.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-588">
-          <caret line="23" column="8" selection-start-line="23" selection-start-column="8" selection-end-line="23" selection-end-column="8" />
+        <state relative-caret-position="221">
+          <caret line="20" column="17" selection-start-line="20" selection-start-column="17" selection-end-line="20" selection-end-column="17" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/algo.py">
+    <entry file="file://C:/Program Files (x86)/Python37-32/Lib/site-packages/scipy/_lib/_ccallback.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/remove_operateur.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-255" />
+        <state>
+          <folding>
+            <element signature="e#0#10#0" expanded="true" />
+          </folding>
+        </state>
       </provider>
     </entry>
-    <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python37-32/Lib/tkinter/__init__.py" />
-    <entry file="file://$PROJECT_DIR$/Fen_principale_design.py">
+    <entry file="file://$PROJECT_DIR$/TestScriptFromInternet.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="170" column="74" selection-start-line="170" selection-start-column="74" selection-end-line="170" selection-end-column="74" />
+        <state relative-caret-position="459">
+          <caret line="28" column="23" lean-forward="true" selection-start-line="28" selection-start-column="23" selection-end-line="28" selection-end-column="23" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/main.py">
       <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="16" selection-start-line="16" selection-end-line="16" />
+          <folding>
+            <element signature="e#0#10#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ZoneInteret.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <element signature="e#24#38#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/RGBToHSV.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/setup.py">
+      <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="17">
-          <caret line="1" selection-start-line="1" selection-end-line="1" />
+          <caret line="1" column="13" selection-start-line="1" selection-start-column="13" selection-end-line="1" selection-end-column="13" />
+          <folding>
+            <element signature="e#0#28#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/algo.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="16" column="59" selection-start-line="16" selection-start-column="59" selection-end-line="16" selection-end-column="59" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://C:/Program Files (x86)/Python37-32/Lib/threading.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="559">
+          <caret line="864" selection-start-line="864" selection-end-line="864" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/algo_distance.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="595">
+          <caret line="47" column="41" selection-start-line="47" selection-start-column="33" selection-end-line="47" selection-end-column="41" />
+          <folding>
+            <element signature="e#46#57#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/.PyCharmCE2018.2/system/python_stubs/-1384526572/PyQt5/QtCore/Qt.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="386">
+          <caret line="1158" column="4" selection-start-line="1158" selection-start-column="4" selection-end-line="1158" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Fen_principale_design.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="301">
+          <caret line="203" column="97" selection-start-line="203" selection-start-column="97" selection-end-line="203" selection-end-column="97" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/affichage_resultat.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-166">
-          <caret line="74" column="7" selection-start-line="74" selection-start-column="7" selection-end-line="74" selection-end-column="7" />
+        <state relative-caret-position="17">
+          <caret line="1" column="25" lean-forward="true" selection-start-line="1" selection-start-column="25" selection-end-line="2" selection-end-column="31" />
+          <folding>
+            <element signature="e#45#76#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/algo_flots_optiques.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="10" selection-start-line="10" selection-end-line="10" />
+          <folding>
+            <element signature="e#0#16#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Fen_principale.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" selection-start-line="4" selection-end-line="4" />
+        <state relative-caret-position="281">
+          <caret line="274" column="24" selection-start-line="274" selection-start-column="24" selection-end-line="274" selection-end-column="24" />
+          <folding>
+            <element signature="e#0#36#0" expanded="true" />
+            <marker date="1546946950190" expanded="true" signature="497:523" ph="..." />
+            <marker date="1546946950190" expanded="true" signature="637:648" ph="..." />
+          </folding>
         </state>
       </provider>
     </entry>
