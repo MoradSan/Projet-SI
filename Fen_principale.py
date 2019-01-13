@@ -56,7 +56,7 @@ class Thread(QObject):
         self.pd.close()
 
         # Affichage de Fournier
-        affichageFourrier(video, ma_liste)
+        affichageFourrier(ma_liste)
         # Affichage du resultat
         pomme = affichage_resultat.affichage_graphique(video, frame)
         pomme.afficher(ma_liste)
@@ -64,12 +64,9 @@ class Thread(QObject):
     def handleProgressChange(self, progress):
         self.pd.setValue(progress)
 
-def affichageFourrier(video, ma_liste):
+def affichageFourrier(ma_liste):
         ma_liste2 = list()
         # Number of samplepoints
-        cap2 = cv2.VideoCapture(video)
-        cap2.set(cv2.CAP_PROP_POS_AVI_RATIO, 1)
-        videoTotalDuration = cap2.get(cv2.CAP_PROP_POS_MSEC)
 
         for i in range(len(ma_liste)):
             ma_liste2.append(ma_liste[i])

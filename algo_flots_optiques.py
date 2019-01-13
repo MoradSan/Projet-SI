@@ -267,7 +267,7 @@ def moyenne_pixels_alentours(ptx, pty, width, height, frame, aire=5):
 # Fonction qui appelle le thread thread_suppr_coul en multithreading
 def suppression_couleur(frame, width, height, hsv_indesirable, aire=5):
 
-    pool = ThreadPool(20)
+    pool = ThreadPool(4)
 
     pool.starmap(thread_suppr_coul, zip(itertools.repeat(frame), itertools.repeat(width), itertools.repeat(height),
                                         itertools.repeat(hsv_indesirable), itertools.repeat(aire),
