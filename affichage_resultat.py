@@ -6,7 +6,7 @@ from matplotlib.widgets import Cursor
 import numpy as np
 import cv2
 import time
-#from dtw import dtw
+from dtw import dtw
 from pylab import norm
 
 class affichage_graphique:
@@ -113,19 +113,20 @@ class affichage_graphique:
         #creer un tableau  contenant de la taille de ma_liste contenant des 0
         zero=np.array(range(len(ma_liste))).reshape(-1,1)
         zero.fill(0)
-        """
         #Recuperer les donnees de la poule calme
-        calme=np.loadtxt('poule_calme.txt')
+       # calme=np.loadtxt('poule_calme.txt')
         current = np.array(ma_liste).reshape(-1,1)
-        
+
         #Distance 0 et poule calme
-        dist, cost, acc, path =dtw(zero, calme, dist=lambda zero, calme: norm(zero - calme, ord=1))
-        print('la distance par rapport a la poule calme ',dist)
+        #dist, cost, acc, path =dtw(zero, calme, dist=lambda zero, calme: norm(zero - calme, ord=1))
+       # print('la distance par rapport a la poule calme ',dist)
 
         # Distance 0 et poule actuelle
         dist, cost, acc, path = dtw(zero, current, dist=lambda zero, current: norm(zero - current, ord=1))
-        print('la distance par rapport a la poule actuelle ', dist)
-        """
+        print(dist)
+        file=open('comparaison.txt','a+')
+        file.write('\n'+self.video+' '+np.array2string(dist,precision=2,separator=','))
+        file.close()
         x = np.array(range(len(ma_liste)))
 
         #Tableau copie de notre liste
